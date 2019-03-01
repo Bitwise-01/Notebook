@@ -1,0 +1,110 @@
+@import url("main.css");
+
+#container {
+    display: block;
+    text-align: center;
+    text-align: -webkit-center;
+}
+
+#login-box a, #login-box input, #login-box button {
+    font-family: 'Comfortaa', cursive;
+}
+
+#login-box {
+    width: 500px;
+	height: 280px;
+    margin: 0 auto;
+    margin-top: 30px;
+	border-radius: 2%;
+	background-color: #fff;
+    border: 1px solid var(--bg-color);
+}
+
+#login-box form {
+    padding-top: 13%;
+}
+
+#login-box form input {
+    width: 75%;
+    border: none;
+	outline: none;
+	padding-left: 5px;
+	text-align: center;
+    line-height: 2.5em;
+    border-radius: var(--btn-radius);
+}
+
+#username:focus, #password:focus {
+    text-align: left;
+    border: 1px solid var(--btn-color);
+} 
+
+#login {
+    width: 26%;
+	height: 35px;
+    border: none;
+    outline: none;
+    display: block;
+	font-size: 1em;
+    margin: 5% auto;
+    color: var(--txt-color);
+    background-color: #fff;
+	border-radius: var(--btn-radius);
+    background-color: var(--btn-color);
+}
+
+#login:hover {
+    cursor: pointer;
+    background-color: var(--btn-hover); 
+}
+
+#login:active {
+	border: 1px solid var(--bg-color);
+}
+
+#sign-up {
+    display: block;
+    text-align: right;
+    padding-right: 45px;
+}
+
+#sign-up a {
+    text-decoration: none;
+    color: var(--btn-hover);
+}
+
+#sign-up a:hover {
+    color: var(--btn-color);
+}
+
+/* Medium Mobile Screen */
+@media (min-width: 321px) and (max-width: 767px) {    
+    #login-box {
+        width: 320px;
+        height: 200px;
+    }
+
+    #login { 
+        margin-bottom: 1px;
+    }
+
+    #sign-up {
+        padding-right: 25px;
+    }
+}
+
+/* Small Mobile Screen */
+@media (min-width: 300px) and (max-width: 320px) {
+    #login-box {
+        width: 300px;
+        height: 200px;
+    }
+
+    #login { 
+        margin-bottom: 1px;
+    }
+
+    #sign-up {
+        padding-right: 10px;
+    }
+}

@@ -1,0 +1,106 @@
+@import url("main.css");
+
+#container {
+    padding-top: 15%;
+}
+
+#settings {
+    font-size: 1.3em;
+    margin-left: 20px;
+    margin-bottom: 55px;
+    display: inline-block;
+    text-decoration: none;
+    color: var(--txt-color);
+}
+
+#settings:hover {
+    cursor: pointer;
+    color: var(--btn-color);
+}
+
+#settings img {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#update {
+    display: table;
+    margin: 0 auto;
+}
+
+#update input {
+    text-align: center;
+}
+
+#new-topic-name {
+    margin-bottom: 25px;
+}
+
+#update-topic {
+    padding: 5%;
+    display: block;
+    margin: 0 auto;
+    font-size: 1.2em;
+    color: var(--txt-color);
+    background-color: var(--btn-color);
+}
+
+#update-topic:hover {
+    cursor: pointer;
+    background-color: var(--btn-hover);
+}
+
+#new-topic-name {
+    padding: 8px;
+    font-size: 18px;
+}
+
+#new-topic-name, #update-topic {
+    border: none;
+    outline: none;
+    border-radius: var(--btn-radius);
+    font-family: 'Comfortaa', cursive;   
+}
+
+#danger {
+    margin-top: 1.2%;
+    text-align: center;
+}
+
+#delete {
+    padding: 1%;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1.2em;
+    background-color: var(--drk-red);
+    border-radius: var(--btn-radius);
+    font-family: 'Comfortaa', cursive;
+}
+
+#delete:hover {
+    cursor: pointer;
+    background-color: var(--dp-red);
+}
+
+/* Mobile Screen */
+@media (min-width: 300px) and (max-width: 767px) {
+    #container {
+        padding-top: 50%;
+    }
+
+    #delete {
+        margin-top: 2%;
+        padding: 5%;
+    }
+}
+
+/* Wide Screen */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #navbar {
+        opacity: 1;
+        visibility: visible;
+    }
+}

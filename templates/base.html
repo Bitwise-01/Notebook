@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/session.js') }}" defer></script>
+    {% block links %}{% endblock %}
+	<title>{% block title %}{% endblock %}</title>	
+</head>
+<body>
+
+    <div id="navbar-container">
+        <div id="menu-container">
+            <div id="menu-icon">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    
+        <div id="navbar">
+    
+            <ul>
+                {% block navbar %}{% endblock %}
+                <li><a href="{{ url_for('logout') }}" id="logout">Logout</a></li>
+            </ul>
+    
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+
+</body>
+</html>

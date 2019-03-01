@@ -1,0 +1,157 @@
+@charset "utf-8";
+@import url("navbar.css");
+
+/* Fonts */
+@font-face {
+	font-family: Comfortaa;
+	src: url('../font/Comfortaa.ttf');
+}
+
+@font-face {
+	font-family: Dosis;
+	src: url('../font/Dosis.ttf');
+}
+
+/* Variables */
+:root {
+    --btn-radius: 5px;
+    --dp-red: #8b0000;
+    --drk-red: #dc3545;
+    --primary: #007bff;
+    --bg-color: #121212;
+    --btn-hover: #3e82ff;
+    --txt-color: #ffffff;
+    --btn-color: #3ea6ff;
+    --conta-color: #1F2226;
+    --navbar-color: #202020;
+}
+
+body {
+    color: var(--txt-color);
+    background-color: var(--bg-color);
+}
+
+#logo {
+    display: block;
+    margin-top: 10%;
+}
+
+#logo a {
+    font-size: 45px; 
+    text-decoration: none;
+    color: var(--btn-color); 
+    font-family: 'Dosis', sans-serif;
+}
+
+#overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: none;
+    position: fixed;
+    background-color: rgba(25, 25, 25, 0.588);
+}
+
+#popup {
+    top: 40%;
+    left: 50%;
+    color: #fff;
+    padding: 1.5% 2%;
+    position: absolute;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+}
+
+#popup p {
+    color: #000;
+    font-size: 1.3em;
+    font-family: 'Comfortaa', cursive
+}
+
+#popup button {
+    border: none;
+    color: #fff;
+    outline: none;
+    font-size: 15px;
+    margin: 5px 20px;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive;
+}
+
+#popup button:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+#yes {
+    background-color: var(--drk-red);
+}
+
+#yes:hover {
+    background-color: var(--dp-red);
+}
+
+#no {
+    background-color: #000;
+}
+
+#no:hover {
+    background-color: #444;
+}
+
+/* Flash Message */
+.message {
+    display: block;
+    margin-top: 15px;
+    padding-left: 10px;
+    font-family: 'Comfortaa', cursive;
+}
+
+.intro {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+
+.error {
+    color: var(--drk-red);
+}
+
+.success {
+    color: #28a745;
+}
+
+/* Input Response */
+.error-msg {
+    box-shadow: 0 0 3px 3px var(--drk-red);
+}
+
+.success-msg {
+    box-shadow: 0 0 3px 3px #28a745;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+    width: 1px;
+    height: 1.5px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--bg-color);
+}
+
+@media (max-width: 767px) {
+    .message {
+        font-size: 10px;
+    }
+}

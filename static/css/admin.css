@@ -1,0 +1,86 @@
+@import url("main.css");
+
+#container {
+    margin-top: 5%;
+}
+
+#stats {
+    padding: 0.5% 0 1.2% 5%;
+}
+
+#stats span {
+    text-align: left;
+    margin-left: 5px;
+    padding-right: 5px;
+    border-right: 1.5px solid #fff;
+    font-family: 'Comfortaa', cursive;
+}
+
+#stats span span {
+    color: var(--btn-color);
+}
+
+#stats span:last-child {
+    border: none;
+}
+
+#table-container {
+    width: 90%;
+    margin: auto;
+    height: 585px;
+    overflow: auto;
+    background-color: #fff;
+}
+
+table {
+    width: 100%; 
+	margin: auto;
+	font-size: 15px;
+    table-layout: fixed;     
+    background-color: #fff;
+	font-family: 'Comfortaa', cursive;
+}
+
+table tr:nth-child(even) {
+    color: #000;
+    background-color: #fff;
+}
+
+table tr:nth-child(odd) {
+    color: #fff;
+    background-color: var(--navbar-color);
+}
+
+table th {
+	padding: 1.1%;
+    color: #fff;
+    background-color: var(--bg-color);
+}
+
+td {
+	padding: 0.9%;
+	text-align: center;
+}
+
+.username:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Mobile Screen */
+@media (min-width: 300px) and (max-width: 767px) {
+    #container {
+        padding-top: 10%;
+    }
+
+    table, #stats {
+        font-size: 6px;
+    }
+}
+
+/* Wide Screen */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #container {
+        padding-top: 8%;
+    }
+}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+    {% block links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/settings.css') }}">
+    <script src="{{ url_for('static', filename='js/settings.js') }}" defer></script>
+    {% endblock %}
+    
+    {% block title %} Notebook - Settings {% endblock %}
+
+    {% block navbar %}
+        {% if session['access_level'] != PermissionConst.NONE.value %}
+        <li><a href="{{ url_for('admin') }}">Admin</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('index') }}">Notebook</a></li>
+        <li><a href="#" class="active-tab">Settings</a></li>
+    {% endblock %}
+        
+    {% block content %}
+
+    <div id="container">
+
+        <div id="overlay">
+            <div id="popup">
+                <p>Are you sure?</p>
+                <button id="yes" onclick="deleteAccount(1)">Yes</button>
+                <button id="no" onclick="deleteAccount(0)">No</button>
+            </div>
+        </div> 
+
+        <div id="username-container">
+            <p class="resp" id="usr-resp"></p>
+            <input type="text" id="username" placeholder="{{ session['username'] }}" spellcheck="false">
+            <button type="button" onclick="changeUsername()">Change Username</button>
+        </div>
+
+        <div id="password-container">
+            <p class="resp" id="pwd-resp"></p>
+            <input type="password" id="old-pwd" placeholder="Current password" maxlength="64">
+            <input type="password" id="new-pwd" placeholder="New password" maxlength="64">
+            <input type="password" id="conf" placeholder="Confirm password" maxlength="64">
+            <button type="button" onclick="changePassword()">Change Password</button>
+        </div>
+
+        <div id="remove">
+            <button type="button" onclick="deleteAccount()">Delete Account</button>
+        </div>
+
+    </div>
+
+    {% endblock %}

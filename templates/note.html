@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+    {% block links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/note.css') }}">
+    <script src="{{ url_for('static', filename='js/note.js') }}" defer></script>
+    {% endblock %}
+            
+    {% block title %}Notebook - {{ note['note_title'] }}{% endblock %}
+
+    {% block navbar %}
+        {% if session['access_level'] != PermissionConst.NONE.value %}
+        <li><a href="{{ url_for('admin') }}">Admin</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('index') }}">Notebook</a></li>
+        <li><a href="{{ url_for('index') }}">Settings</a></li>
+    {% endblock %}
+        
+    {% block content %}    
+        <div id="container">      
+            
+            <div id="overlay">
+                <div id="popup">
+                    <p>Are you sure?</p>
+                    <button id="yes" onclick="deleteNote(1)">Yes</button>
+                    <button id="no" onclick="deleteNote(0)">No</button>
+                </div>
+            </div>           
+            
+            <span id="topic-id" hidden>{{ note['topic_id'] }}</span>
+            <span id="note-id" hidden>{{ note['note_id'] }}</span>
+
+            <div id="topic-name">
+                <a href="/topic?id={{ note['topic_id'] }}">{{ note['topic_name'] }}</a>
+            </div>
+
+            <div id="text-editor">
+
+                <!-- Buttons -->
+                <div id="buttons">
+
+                    <div>
+                        <!-- Functions -->
+                        <button type="button" title="Bold" onclick="execute('bold')"><b>B</b></button>
+                        <button type="button" title="Italic" onclick="execute('italic')"><em><b>I</b></em></button>
+                        <button type="button" title="Underline" onclick="execute('underline')"><u><b>U</b></u></button>
+                        <button type="button" title="Strike through" onclick="execute('strikethrough')"><s><b>S</b></s></button>
+                        
+                        <!-- Align -->
+                        <img src="{{ url_for('static', filename='img/left-align.png') }}" class="img-icon" title="Left align" onclick="execute('justifyleft')">
+                        <img src="{{ url_for('static', filename='img/center-align.png') }}" class="img-icon" title="Center align" onclick="execute('justifycenter')">
+                        <img src="{{ url_for('static', filename='img/right-align.png') }}" class="img-icon" title="Right align" onclick="execute('justifyright')">
+                                    
+                        <!-- Colors -->
+                        <input type="color" value="#ffffff" title="Text color" onchange="execute('forecolor', this.value)">
+                        <input type="color" value="#111111" title="Background color" onchange="execute('backcolor', this.value)">
+                    </div>
+        
+                    <div>
+                        <!-- Fonts -->
+                        <select id="fonts" onchange="execute('fontname', this.options[this.selectedIndex].value)" title="Fonts">
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                            <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Lucida Console">Lucida Console</option>
+                            <option value="Comfortaa">Comfortaa</option>
+                        </select>
+            
+                        <!-- Font size -->
+                        <select id="font-size" onchange="execute('fontsize', this.options[this.selectedIndex].value)" title="Font size">
+                            <script>
+                                for (let n=1; n<=7; n++) {
+                                    document.write(`<option value="${n}">${n}</option>`);
+                                }
+                            </script>
+                        </select>          
+                    </div>
+
+                    <div>
+                        <!-- Font format -->
+                        <select id="font-format" onchange="execute('formatblock', this.options[this.selectedIndex].value)" title="Font format">
+                            <option value="p">Normal</option>
+                            <option value="h1">Heading 1</option>
+                            <option value="h2">Heading 2</option>
+                            <option value="h3">Heading 3</option>
+                            <option value="h4">Heading 4</option>
+                            <option value="h5">Heading 5</option>
+                            <option value="h6">Heading 6</option>
+                        </select>
+            
+                        <!-- Undo & Redo -->
+                        <img src="{{ url_for('static', filename='img/undo.png') }}" class="img-icon" title="Undo" onclick="execute('undo')" style="margin-left: 8px;">
+                        <img src="{{ url_for('static', filename='img/redo.png') }}" class="img-icon" title="Redo" onclick="execute('redo')">
+            
+                        <!-- List -->
+                        <img src="{{ url_for('static', filename='img/num-list.png') }}" class="img-icon" title="Numbered list" onclick="execute('insertorderedlist')" style="margin-left: 8px;">
+                        <img src="{{ url_for('static', filename='img/bullet-list.png') }}" class="img-icon" title="Unordered list" onclick="execute('insertunorderedlist')">
+                    </div>
+        
+                </div>
+            
+                <!-- Rich text editor -->
+                <div id="editor" contenteditable="true"></div>
+
+                <div id="controls">
+                    <button type="button" id="save" onclick="save(false)" title="Save(Ctrl + S)">Save</button>
+                    <button type="button" id="delete" onclick="deleteNote()" title="Delete">Delete</button>
+                    <button type="button" id="modify" onclick="modify()" title="Change note's name">Modify</button>
+                    <input type="text" id="name" placeholder="{{ note['note_title'] }}">
+                    <p id="time-display"></span></p>
+                </div>
+
+            </div>
+           
+            <div id="lazy-editor" hidden contenteditable="true"></div>
+
+            <script>
+                let html = `{{ note['note_content'] }}`;
+               
+                $(document).ready(() => {
+                    
+                    let lazyEditor = document.getElementById('lazy-editor');
+                    lazyEditor.innerHTML = html;
+
+                    document.getElementById('editor').innerHTML = lazyEditor.innerText;
+                    lazyEditor.innerHTML = '';                                        
+                });
+            </script>        
+        </div>    		
+    {% endblock %}

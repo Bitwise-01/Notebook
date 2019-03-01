@@ -1,0 +1,11 @@
+# VS Code
+.vscode/
+
+# Python Cache
+__pycache__/
+
+# Virtual Environment
+env_notebook/
+
+# Database Files
+*.db 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
+    <title>Notebook - Register</title>
+</head>
+<body>
+    <div id="container">
+        <span id="logo">
+            <a href="{{ url_for('index') }}">Notebook</a>        
+        </span>
+
+        <div id="register-box">
+            <div style="position: absolute">
+                {% with messages = get_flashed_messages(with_categories=True) %}            
+                    {% if messages %}
+                        <span class="message {{ messages[0][0] }}"> {{ messages[0][1] }}</span>
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <form action="{{ url_for('signup') }}" method="post">
+                <input type="text" id="username" name="username" spellcheck="false" placeholder="Username" maxlength="32">
+                <input type="password" id="password" name="password" placeholder="Password" maxlength="64">
+                <input type="password" id="confirm" name="confirm" placeholder="Confirm Password" maxlength="64">           
+                <button type="submit" id="register" name="submit">Sign up</button>
+            </form>
+
+            <span id="log-in">
+                    <a href="{{ url_for('index') }}">Login</a>
+            </span>
+
+            {% if data %}
+                <script>
+                    let username = '{{ data["username"] }}';
+                    let password = '{{ data["password"] }}';
+                    let confirm = '{{ data["confirm"] }}';
+
+                    let usernameInput = document.getElementById('username');
+                    let passwordInput = document.getElementById('password');
+                    let confirmInput = document.getElementById('confirm');
+
+                    usernameInput.value = username;
+                    passwordInput.value = password;
+                    confirmInput.value = confirm;                              
+                </script>            
+            {% endif %}
+
+        </div>
+    </div>	
+</body>
+</html>

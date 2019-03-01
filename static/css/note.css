@@ -1,0 +1,215 @@
+@import url("main.css");
+
+html {
+    position: relative;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+#container #topic-name {
+    margin-top: 6%;
+    margin: 5% 0 2% 0;
+    text-align: center;
+}
+
+#topic-name a {
+    color: #fff;
+    font-size: 1.5em;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Comfortaa', cursive;
+}
+
+#text-editor {
+    width: 90%;
+    color: #000;
+    padding: 0.2% 10px;
+    margin: 1% auto 5% auto;
+    border-radius: 10px 10px 0 0;
+    background-color: var(--btn-hover);
+}
+
+#buttons {
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+#buttons button {
+    border: none;
+    outline: none;
+    color: #000;
+    font-size: 16px;
+    border-radius: 5%;
+    background-color: transparent;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#buttons button:hover, .img-icon:hover {
+    cursor: pointer;
+    background-color: #fff;
+}
+
+#buttons > div {
+    display: inline;
+}
+
+#editor {
+    outline: none;
+    height: 360px;
+    padding: 15px;
+    overflow: auto;
+    line-height: 2;
+    white-space: pre;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.img-icon {
+    width: 20px;
+    height: 25px;
+    cursor: pointer;
+    margin-left: 2px;
+    border-radius: 10%;
+    margin-bottom: -8px;
+}
+
+input[type="color"]:first-of-type {
+    margin-left: 10px;
+}
+
+input[type="color"], select {
+    border: none;
+    height: 20px;
+    outline: none;
+    border-radius: 2px;
+}
+
+input[type="color"]:hover, #fonts, #font-size, #font-format {
+    cursor: pointer;
+}
+
+#fonts {
+    margin-left: 8px;
+}
+
+#font-size {
+    width: 50px;
+    font-size: 14px;
+}
+
+select {
+    text-align: center;
+    text-align-last: center;
+}
+
+#controls {
+    margin: 10px 0 0 4px;
+}
+
+#controls button {
+    border: none;
+    outline: none;
+    padding: 0.8% 1%;
+    margin-right: 10px;
+    color: var(--txt-color);
+    border: 1px solid #fff;
+    border-radius: var(--btn-radius);
+    font-family: 'Comfortaa', cursive;
+}
+
+#controls button:hover {
+    cursor: pointer;
+}
+
+#controls button:active {
+    border: 1px solid transparent;
+}
+
+#save {
+    background-color: var(--btn-color);
+}
+
+#modify {
+    background-color: var(--primary);
+}
+
+#name {
+    opacity: 0;
+    padding: 5px;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    visibility: hidden;
+    text-align: center;
+    border-radius: var(--btn-radius);
+    font-family: 'Comfortaa', cursive;
+}
+
+#delete {
+    background-color: var(--drk-red);
+}
+
+#controls p {
+    color: #fff;
+    font-size: 12px;
+    font-family: 'Comfortaa', cursive;
+}
+
+/* Mobile Screen */
+@media (min-width: 300px) and (max-width: 767px) {
+
+    #popup {
+        top: 40%;
+    }
+    
+    #popup p {
+        font-size: 1em;        
+    }
+    
+    #popup button {
+        font-size: 12px;
+        margin: 5px 1px;
+        border-radius: 5px;
+        font-family: 'Comfortaa', cursive
+    }
+
+    #container {
+        padding-top: 8%;
+    }
+
+    #text-editor {
+        margin: 2% auto;
+    }
+
+    #buttons {
+        padding: 10px;
+        margin-bottom: 2%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    #buttons > div {
+        display: block;
+        text-align: right;
+        margin-bottom: 5px;
+    }
+
+    #controls {
+        margin: 25px 0 10px 10px;
+    }
+
+    #controls button {
+        padding: 2%;
+    }
+
+    #modify {
+        margin-bottom: 2%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    #container #topic-name {
+        margin-top: 10%;
+    }
+}

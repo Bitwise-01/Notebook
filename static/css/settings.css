@@ -1,0 +1,127 @@
+@import url("main.css");
+
+html {
+    position: relative;
+}
+
+#container {
+    margin-top: 6.5%;
+}
+
+#username-container, #password-container {
+    width: 90%;
+    margin: auto;
+    padding-top: 2px;
+    min-height: 305px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    background-color: var(--navbar-color);
+}
+
+#username-container {
+    margin-bottom: 2%;
+}
+
+input:first-of-type {
+    margin-top: 6%;
+}
+
+input {
+    width: 20%;
+    margin: auto;
+    border: none;
+    padding: 10px;
+    outline: none;
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-family: 'Comfortaa', cursive;
+}
+
+.resp {
+    padding: 1.5%;
+    margin-left: 32%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+
+button {
+    padding: 1%;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive;
+    background-color: var(--btn-color);  
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--primary);
+    
+}
+
+#remove {
+    margin-top: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#remove button {
+    background-color: var(--drk-red);
+}
+
+#remove button:hover {
+    background-color: var(--dp-red);
+}
+
+/* Mobile Screen */
+@media (min-width: 300px) and (max-width: 767px) {
+
+    #container {
+        margin-top: 0;
+        margin-bottom: 5%;
+    }
+
+    #popup {
+        margin-top: 20%;
+    }
+
+    #username-container {
+        margin-bottom: 5%;
+    }
+    
+    #username-container, #password-container {
+        font-size: 12px;
+        padding-top: 15px;
+    }
+    
+    .resp {
+        margin-left: 10%;
+    }
+    
+    input {
+        width: 60%;
+        font-size: 12px;
+    }
+
+    input:first-of-type {
+        margin-top: 28%;
+    }
+
+    button {
+        padding: 4% 2.5%;
+    }    
+}
+
+/* Wide Screen */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #container {
+        margin-top: 10%;
+    }
+}

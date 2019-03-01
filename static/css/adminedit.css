@@ -1,0 +1,150 @@
+@import url("main.css");
+
+#container {
+    padding-top: 4%;
+}
+
+.activity {
+    width: 85%;
+    padding: 2%;
+    margin: 35px auto;
+    padding-top: 0.2%;
+    min-height: 239px;
+    max-height: 249px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: var(--navbar-color);
+}
+
+.activity h1 {
+    margin: 2.5%;
+    font-size: 1.3em;
+    font-family: 'Comfortaa', cursive;
+}
+
+#basic-info span.info {
+    font-size: 13px;
+    padding-left: 5px;
+    padding-right: 10px;
+    border-right: 1px solid #fff;
+    font-family: 'Comfortaa', cursive;
+}
+
+#basic-info span.info:last-child {
+    border-right: none;
+}
+
+#basic-info span span {
+    font-weight: bolder;
+    color: var(--btn-color);
+}
+
+#access-level > span {
+    font-weight: bolder;
+    color: var(--btn-color);
+    font-family: 'Comfortaa', cursive;
+}
+
+#access-level select {
+    padding: 5px;
+    border: none;
+    color:white;
+    outline: none;
+    font-size: 15px;
+    line-height: 1.2;
+    background: #111;
+    border-radius: 5px;
+    text-align-last: center;
+    font-family: 'Comfortaa', cursive;
+}
+
+#access-level button {
+    white-space: nowrap;
+    background-color: var(--btn-color);
+}
+
+#access-level button:hover {
+    background-color: var(--primary);
+}
+
+#access-level button:active {
+    background-color: var(--btn-color); 
+}
+
+#logout button {
+    background-color: var(--drk-red); 
+}
+
+#logout button:hover {
+    background-color: var(--dp-red);
+}
+
+#logout button:active {
+    background-color: var(--drk-red);     
+}
+
+.activity button {
+    margin: auto;
+    border: none;
+    color: #fff;
+    outline: none;
+    display: block;
+    margin-top: 5%;
+    font-size: 18px;
+    padding: 1.2% 2%;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive; 
+}
+
+.activity button:hover {
+    cursor: pointer;
+}
+
+#logout #resp {
+    margin-top: 2%;
+    font-size: 15px;
+    font-family: 'Comfortaa', cursive;
+}
+
+#delete button {
+    background-color: var(--dp-red);
+}
+
+#delete button:hover {
+    background-color: var(--drk-red);
+}
+
+#delete button:active {
+    background-color: var(--dp-red);
+}
+
+/* Mobile Screen */
+@media (min-width: 300px) and (max-width: 767px) {
+    #container {
+        padding-top: 10%;
+    }
+
+    #basic-info span.info {
+        font-size: 8px;
+        padding-left: 0;
+        padding-right: 5px;
+    }
+
+    .activity h1 {
+        margin: 10%;
+        font-size: 1.3em;
+        font-family: 'Comfortaa', cursive;
+    }
+
+    .activity button {
+        margin-top: 10%;
+        padding: 3%;
+    }
+}
+
+/* Wide Screen */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #container {
+        padding-top: 8%;
+    }
+}
