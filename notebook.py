@@ -687,7 +687,7 @@ def login():
         if not ('username' in request.form, 'password' in request.form):
             return redirect(url_for('index'))
 
-        username = request.form['username']
+        username = request.form['username'].strip()
         password = request.form['password']
 
         if ((len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or 
