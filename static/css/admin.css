@@ -60,7 +60,8 @@ table th {
 td {
     padding: 0.9%;
     font-size: 14px;
-	text-align: center;
+    text-align: center;
+    word-wrap:break-word
 }
 
 .username:hover {
@@ -74,17 +75,22 @@ td {
         padding-top: 10%;
     }
 
+    #table-container {
+        width: 100%;
+    }
+
     #stats {
         padding: 1.25% 0 3% 0;
     }
 
-    #stats, table th, td {
+    #stats, table th {
         font-size: 6px;
     }
 
-    #table-container {
-        width: 100%;
+    td {
+        font-size: 4.5px;
     }
+
 }
 
 /* Wide Screen */
