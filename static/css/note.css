@@ -9,8 +9,7 @@ body {
 }
 
 #container #topic-name {
-    margin-top: 6%;
-    margin: 5% 0 2% 0;
+    margin: 5% 0 1% 0;
     text-align: center;
 }
 
@@ -19,6 +18,13 @@ body {
     font-size: 1.5em;
     text-align: center;
     text-decoration: none;
+    color: var(--btn-color);  
+    font-family: 'Comfortaa', cursive;
+}
+
+#note-title {
+    margin-bottom: 2%;
+    text-align: center;
     font-family: 'Comfortaa', cursive;
 }
 

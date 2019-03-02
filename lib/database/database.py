@@ -61,6 +61,7 @@ class Account(DatabaseWrapper):
         self.db_create('''
             CREATE TABLE IF NOT EXISTS
             Status(
+                ip_address TEXT,
                 session_token TEXT,
                 last_online INTEGER,
                 time_created INTEGER,
@@ -149,7 +150,7 @@ class Account(DatabaseWrapper):
         hashed_password = self.db_query('SELECT password FROM Account WHERE username=?;', [username])
         return True if bcrypt.hashpw(password.encode(), hashed_password) == hashed_password else False
 
-    def authenticate(self, username, password):
+    def authenticate(self, username, password, ip_address):
         username = username.lower()
 
         if self.account_exists(username):
@@ -162,16 +163,17 @@ class Account(DatabaseWrapper):
                     access_level = self.get_access_level(user_id)
                     token = self.generate_session_token(user_id)
                     last_active = self.get_last_active(user_id)
-                    self.login(user_id, token)
+                    self.login(user_id, token, ip_address)
                     
                     return user_id, master_key, token, last_active, access_level
                 else:
                     self.failed_attempt(user_id)
         return None
 
-    def login(self, user_id, token):
+    def login(self, user_id, token, ip_address):
         self.db_update('UPDATE Attempt SET attempts_made=? WHERE ampt_id=?;', [0, user_id])
         self.db_update('UPDATE Status SET session_token=? WHERE stat_id=?;', [token, user_id])
+        self.db_update('UPDATE Status SET ip_address=? WHERE stat_id=?;', [ip_address, user_id])
 
     def logout(self, user_id):
         token = self.generate_session_token(user_id)
@@ -298,7 +300,7 @@ class Account(DatabaseWrapper):
     def get_last_active(self, user_id):
         epoch = self.db_query('SELECT last_online FROM Status WHERE stat_id=?;', [user_id])
         self.db_update('UPDATE Status SET last_online=? WHERE stat_id=?;', [time(), user_id])
-        return self.format_date(epoch)
+        return datetime.fromtimestamp(epoch).strftime('%b %d, %Y at %I:%M %p')        
 
     def get_last_online(self, user_id):
         epoch = self.db_query('SELECT last_online FROM Status WHERE stat_id=?;', [user_id])
@@ -309,13 +311,17 @@ class Account(DatabaseWrapper):
         return self.format_date(epoch)
     
     def format_date(self, epoch):
-        return datetime.fromtimestamp(epoch).strftime('%b %d, %Y at %I:%M %p')
+        return datetime.fromtimestamp(epoch).strftime('%b %d, %Y')
 
     def get_users(self):
         return self.db_query('SELECT user_id FROM Account ORDER BY access_level;', [], False)
     
     def get_admin(self):
         return self.db_query('SELECT COUNT(*) FROM Account WHERE access_level=?;', [PermissionConst.ROOT.value]) 
+    
+    def get_ip_address(self, user_id):
+        ip_addr = self.db_query('SELECT ip_address FROM Status WHERE stat_id=?;', [user_id])
+        return '0.0.0.0' if not ip_addr else ip_addr
     
     def update_permission(self, user_id, permission_id):
         self.db_update('UPDATE Account SET access_level=? WHERE user_id=?;', [permission_id, user_id])

@@ -26,6 +26,13 @@
     background-color: #fff;
 }
 
+#topic-name {
+    margin-top: -6px;
+    font-size: 1.3em;
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+
 #create {
     display: table;
     margin: 0 auto;
@@ -58,10 +65,10 @@
 
 #notes {
     display: flex;
-    height: 480px;
-    margin-top: 1%;
+    height: 410px;
     overflow: auto;
     flex-wrap: wrap;
+    margin-top: 1.5%;
     justify-content: center;
 }
 
@@ -69,7 +76,7 @@
     padding: 2%;
     min-width: 10%;
     max-width: 10%;
-    margin: 2% 1.5%;
+    margin: 1% 1.5%;
     max-height: 45px;
     display: inline-block;
     border-radius: var(--btn-radius);

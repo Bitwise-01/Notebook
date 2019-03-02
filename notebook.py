@@ -106,7 +106,7 @@ def get_user_key():
 def create_topic(topic_name):
     user_key = get_user_key()
     user_id = session['user_id']
-    topic_name = topic_name.title()
+    topic_name = topic_name.strip()
 
     return profile_db.add_topic(user_id, user_key, topic_name)
 
@@ -118,7 +118,7 @@ def get_topics():
 
 def create_note(topic_id, note_title):
     user_key = get_user_key()
-    note_title = note_title.title()
+    note_title = note_title.strip()
 
     return profile_db.add_note(topic_id, user_key, note_title, '')
 
@@ -490,6 +490,7 @@ def admin():
 
     for row in account_db.get_users():    
         user_id = row[0]  
+        ip_address = account_db.get_ip_address(user_id)
         permission = account_db.get_access_level(user_id)
         last_online = account_db.get_last_online(user_id)
         date_created = account_db.get_date_created(user_id)
@@ -507,6 +508,7 @@ def admin():
         users.append({
             'user_id': user_id,
             'username': username,
+            'ip_address': ip_address,
             'access_level': permission, 
             'last_online': last_online,
             'total_notes': total_notes,
@@ -536,6 +538,7 @@ def edit_user():
 
     user['user_id'] = user_id
     permission = account_db.get_access_level(user_id)
+    user['ip_address'] = account_db.get_ip_address(user_id)
     user['last_online'] = account_db.get_last_online(user_id)
     user['date_created'] = account_db.get_date_created(user_id)
     user['username'] = account_db.get_user_name(user_id).title()
@@ -695,7 +698,7 @@ def login():
            ):
             return redirect(url_for('index'))
         
-        account_data = account_db.authenticate(username, password)
+        account_data = account_db.authenticate(username, password, request.remote_addr)
 
         if account_data:
             user_id, master_key, token, last_active, access_level = account_data

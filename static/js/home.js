@@ -82,6 +82,8 @@ function getTopics() {
             dateCreated = topic['date_created'];
 
             $topic = $('<div>', {'class': 'topic'});
+
+            $topic.attr('title', topicName);
             $topic.attr('onclick', `location.href='/topic?id=${topicId}'`);
     
             $topicName = $('<span>', {'class': 'topic-name'});

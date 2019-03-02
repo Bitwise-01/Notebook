@@ -35,7 +35,6 @@
 table {
     width: 100%; 
 	margin: auto;
-	font-size: 15px;
     table-layout: fixed;     
     background-color: #fff;
 	font-family: 'Comfortaa', cursive;
@@ -52,13 +51,15 @@ table tr:nth-child(odd) {
 }
 
 table th {
-	padding: 1.1%;
+    padding: 1.1%;
     color: #fff;
+    font-size: 15px;
     background-color: var(--bg-color);
 }
 
 td {
-	padding: 0.9%;
+    padding: 0.9%;
+    font-size: 14px;
 	text-align: center;
 }
 
@@ -73,8 +74,16 @@ td {
         padding-top: 10%;
     }
 
-    table, #stats {
+    #stats {
+        padding: 1.25% 0 3% 0;
+    }
+
+    #stats, table th, td {
         font-size: 6px;
+    }
+
+    #table-container {
+        width: 100%;
     }
 }
 

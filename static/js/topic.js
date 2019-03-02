@@ -85,6 +85,8 @@ function getnotes() {
             dateCreated = note['date_created'];
 
             $note = $('<div>', {'class': 'note'});
+
+            $note.attr('title', noteTitle);
             $note.attr('onclick', `location.href='/note?topic_id=${topicId}&note_id=${noteId}'`);
                 
             $noteTitle = $('<span>', {'class': 'note-name'});
