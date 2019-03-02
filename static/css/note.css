@@ -61,9 +61,10 @@ body {
     padding: 15px;
     overflow: auto;
     line-height: 2;
-    white-space: pre;
     border-radius: 2px;
+    white-space: pre-wrap;
     background-color: #fff;
+    padding: 2.5% 25% 2.5% 5%;
 }
 
 .img-icon {
