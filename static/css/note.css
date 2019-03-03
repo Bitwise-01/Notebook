@@ -9,7 +9,7 @@ body {
 }
 
 #container #topic-name {
-    margin: 5% 0 1% 0;
+    margin: 4% 0 1% 0;
     text-align: center;
 }
 
@@ -23,7 +23,8 @@ body {
 }
 
 #note-title {
-    margin-bottom: 2%;
+    font-size: 1.2em;
+    margin-bottom: 1%;
     text-align: center;
     font-family: 'Comfortaa', cursive;
 }
@@ -183,7 +184,7 @@ select {
     }
 
     #container {
-        padding-top: 8%;
+        padding-top: 10%;
     }
 
     #text-editor {
