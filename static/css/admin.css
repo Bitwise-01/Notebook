@@ -37,6 +37,7 @@ table {
 	margin: auto;
     table-layout: fixed;     
     background-color: #fff;
+    border-collapse: collapse;
 	font-family: 'Comfortaa', cursive;
 }
 
@@ -54,14 +55,13 @@ table th {
     padding: 1.1%;
     color: #fff;
     font-size: 15px;
-    background-color: var(--bg-color);
 }
 
 td {
     padding: 0.9%;
     font-size: 14px;
     text-align: center;
-    word-wrap:break-word
+    word-wrap: break-word;
 }
 
 .username:hover {
