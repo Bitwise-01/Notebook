@@ -39,10 +39,12 @@
 }
 
 #new-note-name {
+    padding: 8px;
     margin-bottom: 25px;
 }
 
 #create-note {
+    padding: 12px;
     display: block;
     margin: 0 auto;
     color: var(--txt-color);
@@ -55,7 +57,6 @@
 }
 
 #new-note-name, #create-note {
-    padding: 8px;
     border: none;
     outline: none;
     font-size: 18px;

@@ -10,10 +10,12 @@
 }
 
 #new-topic-name {
+    padding: 8px;
     margin-bottom: 25px;
 }
 
 #create-topic {
+    padding: 12px;
     display: block;
     margin: 0 auto;
     color: var(--txt-color);
@@ -26,7 +28,6 @@
 }
 
 #new-topic-name, #create-topic {
-    padding: 8px;
     border: none;
     outline: none;
     font-size: 18px;
