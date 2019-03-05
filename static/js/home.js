@@ -28,6 +28,8 @@ function createTopic() {
         
         if (topicId) {
             let $topic = $('<div>', {'class': 'topic'});
+            
+            $topic.attr('title', topicName);
             $topic.attr('onclick', `location.href='/topic?id=${topicId}'`);
     
             let $topicName = $('<span>', {'class': 'topic-name'});
