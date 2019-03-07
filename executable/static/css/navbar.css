@@ -1,0 +1,134 @@
+body, #navbar ul {
+    margin: 0;
+}
+
+#navbar {
+    width: 100%;
+    transition: all 0.5s;
+    background-color: var(--navbar-color);
+}
+
+#navbar-container {
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    position: fixed;
+}
+
+#navbar ul {
+    text-align: right;
+}
+
+#navbar li {
+    margin-right: 8px;
+    display: inline-block;
+}
+
+#navbar li a {
+    display: block;
+    font-size: 1.2em; 
+    padding: 15px 5px;
+    text-decoration: none;
+    color: var(--txt-color);
+    font-family: 'Comfortaa', cursive;
+}   
+
+#navbar li a:hover, #navbar li a.active-tab {
+    color: var(--btn-color);
+}
+
+#navbar li a.active-tab {
+    cursor: default;
+}
+
+#navbar a#logout:hover {
+    color: var(--drk-red);
+}
+
+.hide {
+    opacity: 0; 
+    visibility: hidden;   
+}
+
+.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Mobile Screen */
+@media (min-width: 300px) and (max-width: 767px) {
+
+    #container {
+        padding-top: 25%;
+    }
+
+    #navbar {
+        opacity: 0;
+        position: absolute;
+        visibility: hidden;
+    }
+
+    #menu-container {
+        padding: 20px 0;
+        background-color: var(--txt-color);
+    }
+
+    #menu-icon {
+        position: absolute;
+        display: inline-block;
+        margin: -12px 0 0 10px;
+    }
+    
+    #menu-icon div {
+        width: 30px;
+        height: 4.3px;
+        margin-bottom: 4.5px;
+        background-color: #111;
+        transition: 250ms ease-in-out;
+    }
+
+    #menu-icon:hover {
+        cursor: pointer;
+    }
+
+    #navbar ul {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    
+    #navbar li {
+        width: 100%;
+        display: block;
+    }
+    
+    #navbar li a {
+        width: 100%;
+        display: inline-block;
+        border-bottom: 1px solid var(--txt-color);
+    }
+
+    #navbar li a:hover, #navbar li a.active-tab {
+        color: var(--txt-color);
+        background-color: var(--btn-color);
+    }
+
+    #navbar a#logout:hover {
+        color: var(--txt-color);
+        background-color: var(--drk-red);
+    }
+
+    #navbar-container {
+        top: 0;
+        width: 100%;
+        position: fixed;
+    }
+}
+
+/* Wide Screen */
+@media (min-width: 768px) {
+    #navbar {
+        opacity: 1;
+        visibility: visible;
+    }
+}

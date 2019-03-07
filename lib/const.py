@@ -2,6 +2,7 @@
 # Author: Mohamed
 # Description: Const
 
+import sys 
 from enum import Enum
 
 
@@ -14,8 +15,8 @@ class PermissionConst(Enum):
 
 class DatabaseConst(Enum):
 
-    PROFILE_DB = 'lib/database/profile.db'
-    ACCOUNT_DB = 'lib/database/account.db'
+    ACCOUNT_DB = 'database/account.db' if getattr(sys, 'frozen', False) else 'lib/database/account.db'
+    PROFILE_DB = 'database/profile.db' if getattr(sys, 'frozen', False) else 'lib/database/profile.db'
 
     LOCK_TIME = 60 * 60 # (secs) 60 * 60 => 1 hour
     MAX_FAILED_ATTEMPTS = 7 # attempts before locking

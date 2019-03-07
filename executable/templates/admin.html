@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+    {% block links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}">
+    <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+    {% endblock %}
+    
+    {% block title %} Notebook - Admin {% endblock %}
+
+    {% block navbar %}
+        <li><a href="#" class="active-tab">Admin</a></li>
+        <li><a href="{{ url_for('index') }}">Notebook</a></li>
+        <li><a href="{{ url_for('settings') }}">Settings</a></li>
+    {% endblock %}
+        
+    {% block content %}
+
+    <div id="container">
+
+        <div id="stats">
+            <span id="total-users"><span>Users:</span> {{ stats['total_users'] }} </span>
+            <span id="total-topics"><span>Topics:</span> {{ stats['total_topics'] }} </span>
+            <span id="total-notes"><span>Notes:</span> {{ stats['total_notes'] }} </span>
+        </div>
+
+        <div id="table-container"> 
+            <table>
+
+                <tr>
+                    <th>Username</th>
+                    <th>Access Level</th>
+                    <th>Data Created</th>
+                    <th>Last Accessed</th>
+                    <th>IP Address</th>
+                    <th>Total Topics</th>
+                    <th>Total Notes</th>
+                </tr>
+
+                {% for user in users %}
+                <tr>
+                    <td class="username" onclick=location.href="/edit_user?id={{ user['user_id'] }}">{{ user['username'] }}</td>
+                    <td>{{ user['access_level'] }}</td>
+                    <td>{{ user['date_created'] }}</td>
+                    <td>{{ user['last_online'] }}</td>
+                    <td>{{ user['ip_address'] }}</td>
+                    <td>{{ user['total_topics'] }}</td>
+                    <td>{{ user['total_notes'] }}</td>
+                </tr>
+                {% endfor %}                
+
+            </table>
+        </div>
+    </div>
+    {% endblock %}

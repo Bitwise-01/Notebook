@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+    {% block links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topic.css') }}">
+    <script src="{{ url_for('static', filename='js/topic.js') }}" defer></script>
+    {% endblock %}
+            
+    {% block title %} 
+        {% if topic %}
+            Notebook - {{ topic['topic_name'] }}
+        {% else %}
+            Notebook - Topic 
+        {% endif %}
+    {% endblock %}
+
+    {% block navbar %}
+        {% if session['access_level'] != PermissionConst.NONE.value %}
+        <li><a href="{{ url_for('admin') }}">Admin</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('index') }}" >Notebook</a></li>
+        <li><a href="{{ url_for('settings') }}">Settings</a></li>
+    {% endblock %}
+        
+    {% block content %}    
+        <div id="container">
+
+            <div onclick=location.href="/settings/topic?topic_id={{ topic['topic_id'] }}" id="settings">
+                <img src="{{ url_for('static', filename='img/settings.png') }}">
+                Settings
+            </div>
+
+            <p id="topic-name"> {{ topic['topic_name'] }}</p>
+                    
+            <div id="create">
+                <span id="topic-id" hidden>{{ topic['topic_id'] }}</span>
+                <input type="text" placeholder="Create a new note" id="new-note-name" spellcheck="true" maxlength="32">
+                <button type="button" id="create-note" onclick="createnote()">Create</button>
+            </div>
+
+            <div id="notes"></div>
+
+        </div>    		
+    {% endblock %}

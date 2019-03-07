@@ -2,20 +2,35 @@
 # Author: Mohamed
 # Description: A secure notebook
 
+import os
+import sys
+import webbrowser
 from datetime import timedelta
 from lib.cipher import get_random_bytes, CryptoAES
 from lib.database.database import Account, Profile
 from lib.const import SessionConst, CredentialConst, ProfileConst, PermissionConst
 from flask import Flask, flash, render_template, request, session, jsonify, redirect, url_for
 
+# app 
+if getattr(sys, 'frozen', False): 
+    path = os.path.abspath('.')   
+
+    if not os.path.exists('database'):
+        os.mkdir(os.path.join(path, 'database')) 
+                                                                                                                                    
+    static_folder = os.path.join(path, 'static')                                                                                                            
+    template_folder = os.path.join(path, 'templates')    
+
+    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+else:
+    app = Flask(__name__)
+
+app.config['SECRET_KEY'] = get_random_bytes(0x20)
+app.permanent_session_lifetime = timedelta(minutes=SessionConst.SESSION_TTL.value)
+
 # databases
 account_db = Account()
 profile_db = Profile()
-
-# app 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = get_random_bytes(0x20)
-app.permanent_session_lifetime = timedelta(minutes=SessionConst.SESSION_TTL.value)
 
 # core functions
 def login_required(func):
@@ -738,4 +753,5 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
+    webbrowser.open('http://127.0.0.1:5000', new=2)
     app.run()

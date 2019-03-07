@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+    {% block links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+    {% endblock %}
+    
+    {% block title %} Notebook - Home {% endblock %}
+
+    {% block navbar %}
+        {% if session['access_level'] != PermissionConst.NONE.value %}
+        <li><a href="{{ url_for('admin') }}">Admin</a></li>
+        {% endif %}
+        <li><a href="#" class="active-tab">Notebook</a></li>
+        <li><a href="{{ url_for('settings') }}">Settings</a></li>
+    {% endblock %}
+        
+    {% block content %}    
+        <div id="container">
+            <div id="create">
+                <input type="text" placeholder="Create a new topic" id="new-topic-name" spellcheck="true" maxlength="32">
+                <button type="button" id="create-topic" onclick="createTopic()">Create</button>
+            </div>
+
+            <div id="topics"></div>
+            {% with messages = get_flashed_messages() %}            
+                {% if messages %}
+                    <p id="last-active">last accessed on {{ messages[0] }}</p>
+                {% endif %}
+            {% endwith %}
+
+        </div>    		
+    {% endblock %}

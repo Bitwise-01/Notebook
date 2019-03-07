@@ -1,0 +1,115 @@
+@import url("main.css");
+
+#container {
+    display: block;
+    text-align: -webkit-center;
+}
+
+#register-box a, #register-box input, #register-box button {
+    font-family: 'Comfortaa', cursive;
+}
+
+#register-box {
+    width: 500px;
+	height: 330px;
+    margin-top: 30px;
+	border-radius: 2%;
+	background-color: #fff;
+    border: 1px solid var(--bg-color);
+}
+
+#register-box form {
+    padding: 12% 0 2% 0;
+}
+
+#register-box form input {
+	width: 75%;
+    border: none;
+    outline: none;
+	padding-left: 5px;
+    line-height: 2.5em;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: var(--btn-radius);
+}
+
+#username:focus, #password:focus, #confirm:focus {
+    border: 1px solid var(--btn-color);
+} 
+
+#register {
+    width: 26%;
+	height: 35px;
+    border: none;
+    outline: none;
+    display: block;
+    font-size: 1em;
+    margin-top: 5%;
+    color: var(--txt-color);
+	border-radius: var(--btn-radius);
+    background-color: var(--btn-color);
+}
+
+#register:hover {
+    cursor: pointer;
+    background-color: var(--btn-hover); 
+}
+
+#register:active {
+	border: 1px solid var(--bg-color);
+}
+
+#log-in {
+    display: block;
+    text-align: right;
+    padding-right: 45px;
+}
+
+#log-in a {
+    text-decoration: none;
+    color: var(--btn-hover);
+}
+
+#log-in a:hover {
+    color: var(--btn-color);
+}
+
+/* Normal Mobile Screen */
+@media (min-width: 321px) and (max-width: 767px) {
+    #register-box form input {
+        margin-bottom: 5px;
+    }
+
+    #register-box {
+        width: 320px;
+        height: 260px;
+    }
+
+    #register{ 
+        margin-bottom: 1px;
+    }
+
+    #log-in {
+        padding-right: 25px;
+    }
+}
+
+/* Small Mobile Screen */
+@media (min-width: 300px) and (max-width: 320px) {
+    #register-box form input {
+        margin-bottom: 0;
+    }
+
+    #register-box {
+        width: 300px;
+        height: 235px;
+    }
+
+    #register{ 
+        margin-bottom: 1px;
+    }
+
+    #log-in {
+        padding-right: 20px;
+    }    
+}
