@@ -5,21 +5,26 @@
     text-align: -webkit-center;
 }
 
+#logo {
+    margin-top: 2%;
+}
+
 #register-box a, #register-box input, #register-box button {
     font-family: 'Comfortaa', cursive;
 }
 
 #register-box {
-    width: 500px;
-	height: 330px;
-    margin-top: 30px;
+    width: 50%;
+	height: 600px;
+    margin-top: 10px;
 	border-radius: 2%;
-	background-color: #fff;
+    position: relative;
+    background-color: #fff;
     border: 1px solid var(--bg-color);
 }
 
 #register-box form {
-    padding: 12% 0 2% 0;
+    padding: 40% 0 2% 0;
 }
 
 #register-box form input {
@@ -73,6 +78,27 @@
 #log-in a:hover {
     color: var(--btn-color);
 }
+
+#rules {
+    top: 2%;
+    padding: 1%;
+    border-radius: 5px;
+    position: absolute;
+}
+
+#rules ul li {
+    line-height: 1.5;
+    text-align: left;
+    font-family: 'Dosis', sans-serif;
+}
+
+#resp {
+    top: 40%;
+    left: 15%;
+    text-align: center;
+    position: absolute;
+}
+
 
 /* Normal Mobile Screen */
 @media (min-width: 321px) and (max-width: 767px) {

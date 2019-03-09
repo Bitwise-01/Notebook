@@ -81,11 +81,10 @@ def invalid_username(username):
         return 'Username must not contain special characters' 
     
 def invalid_password(username, password, confirm):
-
     if password != confirm:
         return 'Passwords do not match'
 
-    if len(password) < CredentialConst.MIN_PASSWORD_LENGTH.value:
+    if len(password) < CredentialConst.MIN_PASSWORD_LENGTH.value: 
         return 'Password must be at least {} characters long'.format(
             CredentialConst.MIN_PASSWORD_LENGTH.value
         )
@@ -96,19 +95,74 @@ def invalid_password(username, password, confirm):
         )
     
     if not ' ' in password:
-        return 'Password must contain at least 1 space character'
+        return 'Password must contain at least one space character'
+
+    if password[0] == ' ' or password[-1] == ' ':
+        return 'Password must not start or end with a space character'
     
     if password[-1].isdigit():
         return 'Password must not end with a number'
     
     if not [_ for _ in password if _.isalpha() if _ == _.upper()]:
         return 'Password must contain at least one capital letter'
-
-    l_username = ''.join([_ for _ in username if _.isalpha()])
     
-    if l_username.lower() in password.lower():
+    if ''.join([_ for _ in username if _.isalpha()]).lower() in password.lower():
         return 'Password must not contain your username'
-    
+        
+def get_password_rules(username, password):
+    rules = []
+
+    rules.append(
+        {
+            'msg': 'Password must not contain your username',
+            'status': 'error' if ''.join([_ for _ in username if _.isalpha()]).lower() in password.lower() else 'success'
+        }
+    )
+
+    rules.append(
+        {
+            'msg': 'Password must contain at least one capital letter',
+            'status': 'error' if not [_ for _ in password if _.isalpha() if _ == _.upper()] else 'success'
+        }
+    )
+
+    rules.append(
+        {
+            'msg': 'Password must be at least {} characters long'.format(CredentialConst.MIN_PASSWORD_LENGTH.value),
+            'status': 'error' if len(password) < CredentialConst.MIN_PASSWORD_LENGTH.value else 'success'
+        }
+    )
+
+    rules.append(
+        {
+            'msg': 'Password must not be longer than {} characters'.format(CredentialConst.MAX_PASSWORD_LENGTH.value),
+            'status': 'error' if len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value else 'success'
+        }
+    )
+
+    rules.append(
+        {
+            'msg': 'Password must contain at least one space character',
+            'status': 'error' if not ' ' in password else 'success'
+        }
+    )
+
+    rules.append(
+        {
+            'msg': 'Password must not start or end with a space character',
+            'status': 'error' if password[0] == ' ' or password[-1] == ' ' else 'success'
+        }
+    )
+
+    rules.append(
+        {
+            'msg': 'Password must not end with a number',
+            'status': 'error' if password[-1].isdigit() else 'success'
+        }
+    )
+
+    return rules if [rule for rule in rules if rule['status'] == 'error'] else []
+
 def get_user_key():
     user_id = session['user_id']
     master_key = session['master_key']
@@ -667,19 +721,22 @@ def signup():
     if not ('username' in form and 'password' in form and 'confirm' in form):
         flash('Incomplete form', 'error')
         return render_template('register.html')
+        
+    username, password, confirm = form['username'].strip(), form['password'], form['confirm']
+    creds = { 'username': username, 'password': password, 'confirm': confirm if confirm == password else '' }
     
-    username, password, confirm = form['username'].strip(), form['password'].strip(), form['confirm'].strip()
-    creds = { 'username': username, 'password': password, 'confirm': confirm }
+    if form['password'][0] == ' ' or form['password'][-1] == ' ':
+        return render_template('register.html', data=creds, rules=get_password_rules(username, password))     
 
     if not (username and password and confirm):
         flash('Incomplete form', category='error')
-        return render_template('register.html', data=creds)    
-    
+        return render_template('register.html', data=creds, rules=get_password_rules(username, password))  
+
     username_error = invalid_username(username)
 
     if username_error:
         flash(username_error, 'error')
-        return render_template('register.html', data=creds)   
+        return render_template('register.html', data=creds, rules=get_password_rules(username, password))   
     
     if account_db.account_exists(username.lower()):
         flash('{} already exists'.format(username).format(username), 'error')
@@ -689,11 +746,12 @@ def signup():
 
     if password_error:
         flash(password_error, 'error')
-        return render_template('register.html', data=creds)   
+        return render_template('register.html', data=creds, rules=get_password_rules(username, password))    
     
-    account_db.register(username, password)
-    flash('Account created successfully', 'success')
+    account_db.register(username, password.strip())
+    creds = { 'username': username, 'password': '', 'confirm': '' }
 
+    flash('Account created successfully', 'success')
     return render_template('register.html', data=creds)   
 
 @app.route('/login', methods=['GET', 'POST'])
