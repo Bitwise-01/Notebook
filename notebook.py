@@ -95,7 +95,7 @@ def invalid_password(username, password, confirm):
         )
     
     if not ' ' in password:
-        return 'Password must contain at least one space character'
+        return 'Password must contain at least 1 space character'
 
     if password[0] == ' ' or password[-1] == ' ':
         return 'Password must not start or end with a space character'
@@ -104,7 +104,7 @@ def invalid_password(username, password, confirm):
         return 'Password must not end with a number'
     
     if not [_ for _ in password if _.isalpha() if _ == _.upper()]:
-        return 'Password must contain at least one capital letter'
+        return 'Password must contain at least 1 capital letter'
     
     if ''.join([_ for _ in username if _.isalpha()]).lower() in password.lower():
         return 'Password must not contain your username'
@@ -121,7 +121,7 @@ def get_password_rules(username, password):
 
     rules.append(
         {
-            'msg': 'Password must contain at least one capital letter',
+            'msg': 'Password must contain at least 1 capital letter',
             'status': 'error' if not [_ for _ in password if _.isalpha() if _ == _.upper()] else 'success'
         }
     )
@@ -142,7 +142,7 @@ def get_password_rules(username, password):
 
     rules.append(
         {
-            'msg': 'Password must contain at least one space character',
+            'msg': 'Password must contain at least 1 space character',
             'status': 'error' if not ' ' in password else 'success'
         }
     )
