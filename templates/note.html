@@ -31,7 +31,7 @@
 
             <div id="topic-name">
                 <a href="/topic?id={{ note['topic_id'] }}">{{ note['topic_name'] }}</a>
-                <span>{{ note['note_title'] }}</span>
+                <span id="note-title">{{ note['note_title'] }}</span>
             </div>
 
             <div id="text-editor">
@@ -109,7 +109,7 @@
                 <div id="controls">
                     <button type="button" id="save" onclick="save(false)" title="Save(Ctrl + S)">Save</button>
                     <button type="button" id="delete" onclick="deleteNote()" title="Delete">Delete</button>
-                    <button type="button" id="modify" onclick="modify()" title="Change note's name">Modify</button>
+                    <button type="button" id="modify" onclick="modify()" title="Change note's name">Change Title</button>
                     <input type="text" id="name" placeholder="{{ note['note_title'] }}">
                     <p id="time-display"></span></p>
                 </div>

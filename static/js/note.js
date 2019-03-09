@@ -137,6 +137,7 @@ function modify() {
     
     if (!isDisplayed) {
         isDisplayed = true;
+        $('#modify').text('Update Title');
         nameInput.css({'opacity': 1, 'visibility': 'visible'});
     } else {
         if (!isModifyingName) {
@@ -161,18 +162,20 @@ function modifyName(nameInput) {
         if (nameInput.hasClass('error-msg')) {
             nameInput.removeClass('error-msg');
         }
-        
-        if (nameInput.hasClass('success-msg')) {
-            nameInput.removeClass('success-msg');
-        }
-        
+               
         if (respMsg == 'success-msg') {
             nameInput.val('');
             nameInput.attr('placeholder', name);
+
+            isDisplayed = false;
+            $('#modify').text('Change Title');
+            $('#note-title').text(name);
+            nameInput.css({'opacity': 0, 'visibility': 'hidden'});
+        } else {
+            nameInput.addClass(respMsg);
         }
         
         isModifyingName = false;
-        nameInput.addClass(respMsg);
     });
 }
 
