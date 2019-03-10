@@ -701,7 +701,13 @@ def index():
         return render_template('index.html')
 
     if not session['logged_in']:
-        return render_template('index.html')
+        username = session.get('username')
+        username = username if username else ''
+
+        if username:
+            session.pop('username')
+
+        return render_template('index.html', username=username)
 
     flash(session['last_active'])
 
@@ -767,10 +773,12 @@ def login():
         password = request.form['password']
 
         if ((len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or 
-            (len(username) > CredentialConst.MAX_USERNAME_LENGTH.value)
+            (len(username) > CredentialConst.MAX_USERNAME_LENGTH.value) or 
+            (len(username) < CredentialConst.MIN_USERNAME_LENGTH.value) 
            ):
             return redirect(url_for('index'))
         
+        session['username'] = username 
         account_data = account_db.authenticate(username, password, request.remote_addr)
 
         if account_data:
@@ -787,7 +795,6 @@ def login():
             
             return redirect(url_for('index'))
         else:
-            session.clear()
             flash('Invalid username or password', 'error')
             return redirect(url_for('index'))
     else:

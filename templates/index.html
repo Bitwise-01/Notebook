@@ -34,6 +34,19 @@
                 <a href="{{ url_for('signup') }}">Sign up</a>
             </span>
         </div>
+
+        <script>
+            window.onload = function() {
+                let username = '{{ username }}';
+                let usernameField = document.getElementById('username');
+                let passwordField = document.getElementById('password');
+
+                if (username) {
+                    passwordField.focus();
+                    document.getElementById('username').value = '{{ username }}';   
+                }
+            };
+        </script>
     </div>
 
 </body>
