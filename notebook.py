@@ -99,7 +99,7 @@ def invalid_password(username, password, confirm):
 
     if password[0] == ' ' or password[-1] == ' ':
         return 'Password must not start or end with a space character'
-    
+        
     if password[-1].isdigit():
         return 'Password must not end with a number'
     
@@ -729,11 +729,8 @@ def signup():
         return render_template('register.html')
         
     username, password, confirm = form['username'].strip(), form['password'], form['confirm']
-    creds = { 'username': username, 'password': password, 'confirm': confirm if confirm == password else '' }
+    creds = { 'username': username, 'password': password, 'confirm': confirm if confirm == password else '', 'success': 0 }
     
-    if form['password'][0] == ' ' or form['password'][-1] == ' ':
-        return render_template('register.html', data=creds, rules=get_password_rules(username, password))     
-
     if not (username and password and confirm):
         flash('Incomplete form', category='error')
         return render_template('register.html', data=creds, rules=get_password_rules(username, password))  
@@ -754,10 +751,10 @@ def signup():
         flash(password_error, 'error')
         return render_template('register.html', data=creds, rules=get_password_rules(username, password))    
     
+    creds['success'] = 1
+    session['logged_in'] = False
     account_db.register(username, password.strip())
-    creds = { 'username': username, 'password': '', 'confirm': '' }
-
-    flash('Account created successfully', 'success')
+   
     return render_template('register.html', data=creds)   
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -792,7 +789,7 @@ def login():
             session['last_active'] = last_active
             session['username'] = username.title()
             session['access_level'] = access_level
-            
+
             return redirect(url_for('index'))
         else:
             flash('Invalid username or password', 'error')
