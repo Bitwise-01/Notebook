@@ -136,6 +136,46 @@
     }
 }
 
+/* Wide Screen */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #logo {
+        margin-top: 25%;
+    }
+
+    #register-box {
+	    height: 490px;  
+    }
+
+    #register-box form {
+        padding: 48% 0 2% 0;
+    }
+
+    #rules ul li {
+        font-size: 10px;
+    }
+
+    #resp {
+        top: 28%;
+        left: 10%;
+    }
+
+    #resp span {
+        font-size: 10px;
+    }
+
+    #register-box form input {
+        margin-bottom: 0;
+    }
+
+    #register{ 
+        margin-bottom: 1px;
+    }
+
+    #log-in {
+        padding-right: 20px;
+    }    
+}
+
 /* Small Mobile Screen */
 @media (min-width: 300px) and (max-width: 320px) {
     #logo {
@@ -176,3 +216,4 @@
         padding-right: 20px;
     }    
 }
+

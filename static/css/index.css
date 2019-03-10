@@ -81,7 +81,7 @@
 @media (min-width: 321px) and (max-width: 767px) {    
     #login-box {
         width: 320px;
-        height: 200px;
+        height: 215px;
     }
 
     #login { 
@@ -97,7 +97,7 @@
 @media (min-width: 300px) and (max-width: 320px) {
     #login-box {
         width: 300px;
-        height: 200px;
+        height: 215px;
     }
 
     #login { 
