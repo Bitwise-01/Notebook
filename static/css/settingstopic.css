@@ -25,6 +25,12 @@
     background-color: #fff;
 }
 
+#resp {
+    top: 15%;
+    position: absolute;
+    font-family: 'Comfortaa', cursive;
+}
+
 #update {
     display: table;
     margin: 0 auto;
@@ -65,7 +71,7 @@
 }
 
 #danger {
-    margin-top: 1.2%;
+    margin-top: 15%;
     text-align: center;
 }
 
@@ -102,5 +108,9 @@
     #navbar {
         opacity: 1;
         visibility: visible;
+    }
+
+    #resp {
+        top: 6%;
     }
 }

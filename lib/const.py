@@ -38,8 +38,8 @@ class CredentialConst(Enum):
 
 class ProfileConst(Enum):
 
-    MIN_NOTE_LENGTH = 4
-    MAX_NOTE_LENGTH = 32
+    MIN_NOTE_LENGTH = 3
+    MAX_NOTE_LENGTH = 64
 
-    MIN_TOPIC_LENGTH = 4
-    MAX_TOPIC_LENGTH = 32
+    MIN_TOPIC_LENGTH = 3
+    MAX_TOPIC_LENGTH = 64
