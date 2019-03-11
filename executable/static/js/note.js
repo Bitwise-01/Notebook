@@ -68,13 +68,17 @@ function save(autoSave=true) {
     let topicId = $('#topic-id').text();
     let timeDisplay = $('#time-display');
     let html = document.getElementById('editor').innerHTML.trim();
-
+    
     if (!isSaved) {
         if (!timeDisplay.text()) {
             timeDisplay.innerHTML = saveError;
         }
 
         return;
+    }
+
+    if (!autoSave && isDisplayed) {
+        modify();
     }
     
     if (autoSave && !html.length) {

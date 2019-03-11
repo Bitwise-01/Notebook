@@ -26,9 +26,10 @@
                 </div>
             </div> 
 
-            <div id="update">
-                <input type="text" placeholder="{{ topic['topic_name'] }}" id="new-topic-name"  maxlength="32" spellcheck="true" disabled>
-                <button type="button" id="update-topic" onclick="updateName()">Update Name</button>
+            <div id="update"> 
+                <p class="success" id="resp"></p>
+                <input type="text" id="new-topic-name" spellcheck="true">
+                <button type="button" id="update-topic" onclick="update()">Update Name</button>
             </div>
 
             <div id="danger">
@@ -38,5 +39,11 @@
             <span id="topic-id" hidden>{{ topic['topic_id'] }}</span>
             <span id="topic-name" hidden>{{ topic['topic_name'] }}</span>
 
-        </div>    		
+        </div>   
+        
+        <script>
+            $(document).ready(() => {
+                $('#new-topic-name').val('{{ topic["topic_name"] }}');
+            });
+        </script>
     {% endblock %}

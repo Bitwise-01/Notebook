@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
     <title>Notebook - Register</title>
 </head>
@@ -33,9 +34,9 @@
             </div>
 
             <form action="{{ url_for('signup') }}" method="post">
-                <input type="text" id="username" name="username" spellcheck="false" placeholder="Username" maxlength="32">
-                <input type="password" id="password" name="password" placeholder="Password" maxlength="64">
-                <input type="password" id="confirm" name="confirm" placeholder="Confirm Password" maxlength="64">           
+                <input type="text" id="username" name="username" spellcheck="false" placeholder="Username">
+                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="password" id="confirm" name="confirm" placeholder="Confirm Password">           
                 <button type="submit" id="register" name="submit">Sign up</button>
             </form>
 
@@ -48,6 +49,7 @@
                     let username = '{{ data["username"] }}';
                     let password = '{{ data["password"] }}';
                     let confirm = '{{ data["confirm"] }}';
+                    let isSuccessful = '{{ data["success"] }}';
 
                     let usernameInput = document.getElementById('username');
                     let passwordInput = document.getElementById('password');
@@ -55,7 +57,17 @@
 
                     usernameInput.value = username;
                     passwordInput.value = password;
-                    confirmInput.value = confirm;                              
+                    confirmInput.value = confirm;  
+                    
+                    if (isSuccessful) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/login',
+                            data: { 'username': username, 'password': password }
+                        }).done(function() {
+                            window.location.href = '/';
+                        });
+                    }
                 </script>            
             {% endif %}
 

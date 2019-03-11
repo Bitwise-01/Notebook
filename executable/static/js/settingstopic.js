@@ -1,35 +1,22 @@
 'use strict';
 
 let isPrompt = false;
-let lastTopicName = null;
 let isUpdatingName = false;
 
-function updateName() {
-    let topicName = $('#topic-name');
-    let newNameInput = $('#new-topic-name');
+function update() {
+    let newName = $('#new-topic-name').val();
 
-    if (!lastTopicName) {
-        newNameInput.val(topicName.text());
-        newNameInput.removeAttr('disabled');
-    
-        lastTopicName = topicName.text();
-        $('#update-topic').text('Update');
-
-    } else {
-        if ((newNameInput.val() != lastTopicName) && !isUpdatingName) {
-            isUpdatingName = true;
-            update(newNameInput.val());
-        }
-    }
-}
-
-function update(newName) {
     if (!newName.length) {
         return;
     }
 
+    let respText = $('#resp');
     let topicId = $('#topic-id').text();
     let newNameInput = $('#new-topic-name');
+    
+    if (isUpdatingName) {
+        return;
+    }
 
     $.ajax({
         type: 'POST',
@@ -48,7 +35,9 @@ function update(newName) {
         
         if (respMsg == 'success-msg') {
             newNameInput.val('');
-            newNameInput.attr('placeholder', newName);
+            respText.text('Name Updated Successfully');
+        } else {
+            respText.text('');
         }
         
         isUpdatingName = false;

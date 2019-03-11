@@ -25,8 +25,8 @@
             </div>
                         
             <form action="{{ url_for('login') }}" method="post">
-                <input type="text" id="username" name="username" spellcheck="false" placeholder="Username" maxlength="32">
-                <input type="password" id="password" name="password" placeholder="Password" maxlength="64">
+                <input type="text" id="username" name="username" spellcheck="false" placeholder="Username">
+                <input type="password" id="password" name="password" placeholder="Password">
                 <button type="submit" id="login" name="submit">Login</button>
             </form>
 
@@ -34,6 +34,19 @@
                 <a href="{{ url_for('signup') }}">Sign up</a>
             </span>
         </div>
+
+        <script>
+            window.onload = function() {
+                let username = '{{ username }}';
+                let usernameField = document.getElementById('username');
+                let passwordField = document.getElementById('password');
+
+                if (username) {
+                    passwordField.focus();
+                    document.getElementById('username').value = '{{ username }}';   
+                }
+            };
+        </script>
     </div>
 
 </body>
