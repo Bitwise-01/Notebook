@@ -60,7 +60,7 @@
                     passwordInput.value = password;
                     confirmInput.value = confirm;  
                     
-                    if (isSuccessful) {
+                    if (isSuccessful == 1) {
                         $.ajax({
                             type: 'POST',
                             url: '/login',

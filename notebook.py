@@ -733,7 +733,7 @@ def signup():
     
     if not (username and password and confirm):
         flash('Incomplete form', category='error')
-        return render_template('register.html', data=creds, rules=get_password_rules(username, password))  
+        return render_template('register.html', data=creds)  
 
     username_error = invalid_username(username)
 
