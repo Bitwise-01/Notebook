@@ -321,6 +321,9 @@ def createtopic():
         (topic_len > ProfileConst.MAX_TOPIC_LENGTH.value)
        ):
         return jsonify(resp)
+    
+    if profile_db.get_total_topics(session['user_id']) >= ProfileConst.MAX_TOPICS.value:
+        return jsonify(resp)
         
     resp['resp'] = 'success-msg'
     resp['topic_id'], resp['date_created'] = create_topic(topic_name)
@@ -421,6 +424,9 @@ def createnote():
     resp = { 'note_id': '', 'date_created': '', 'resp': 'error-msg' }
 
     if not ('topic_id' in request.form and 'note_title' in request.form):
+        return jsonify(resp)
+
+    if profile_db.get_total_notes(session['user_id']) >= ProfileConst.MAX_NOTES.value:
         return jsonify(resp)
 
     note_title = request.form['note_title'].strip()

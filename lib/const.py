@@ -43,3 +43,6 @@ class ProfileConst(Enum):
 
     MIN_TOPIC_LENGTH = 3
     MAX_TOPIC_LENGTH = 64
+
+    MAX_NOTES = 50
+    MAX_TOPICS = 50
