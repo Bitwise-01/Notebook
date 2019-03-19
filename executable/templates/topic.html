@@ -17,7 +17,7 @@
         {% if session['access_level'] != PermissionConst.NONE.value %}
         <li><a href="{{ url_for('admin') }}">Admin</a></li>
         {% endif %}
-        <li><a href="{{ url_for('index') }}" >Notebook</a></li>
+        <li><a href="{{ url_for('index') }}" class="active-tab">Notebook</a></li>
         <li><a href="{{ url_for('settings') }}">Settings</a></li>
     {% endblock %}
         
