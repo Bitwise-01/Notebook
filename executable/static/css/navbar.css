@@ -39,10 +39,6 @@ body,
     color: var(--btn-color);
 }
 
-#navbar li a.active-tab {
-    cursor: default;
-}
-
 #navbar a#logout:hover {
     color: var(--drk-red);
 }
