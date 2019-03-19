@@ -12,8 +12,13 @@ $(document).ready(() => {
         mouseMoved = true;
     });
 
+    setInterval(() => {
+        if (mouseMoved) {
+            sessionCheck();
+        }
+    }, sessionUpdateDelay);
+
     setInterval(sessionCheck, sessionCheckDelay);
-    setInterval(sessionUpdate, sessionUpdateDelay);
 });
 
 function sessionCheck() {
@@ -42,12 +47,4 @@ function sessionCheck() {
             window.location.href = '/';
         }
     });
-}
-
-function sessionUpdate() {
-    if (!mouseMoved || updatingSession) {
-        return;
-    }
-
-    sessionCheck();
 }
