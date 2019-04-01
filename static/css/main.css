@@ -1,20 +1,20 @@
 @charset "utf-8";
-@import url("navbar.css");
+@import url('navbar.css');
 
 /* Fonts */
 @font-face {
-	font-family: Comfortaa;
-	src: url('../font/Comfortaa.ttf');
+    font-family: Comfortaa;
+    src: url('../font/Comfortaa.ttf');
 }
 
 @font-face {
-	font-family: Dosis;
-	src: url('../font/Dosis.ttf');
+    font-family: Dosis;
+    src: url('../font/Dosis.ttf');
 }
 
 /* Variables */
 :root {
-    --btn-radius: 5px;
+    --btn-radius: 3px;
     --dp-red: #8b0000;
     --drk-red: #dc3545;
     --primary: #007bff;
@@ -22,7 +22,7 @@
     --btn-hover: #3e82ff;
     --txt-color: #ffffff;
     --btn-color: #3ea6ff;
-    --conta-color: #1F2226;
+    --conta-color: #1f2226;
     --navbar-color: #202020;
 }
 
@@ -37,9 +37,9 @@ body {
 }
 
 #logo a {
-    font-size: 45px; 
+    font-size: 45px;
     text-decoration: none;
-    color: var(--btn-color); 
+    color: var(--btn-color);
     font-family: 'Dosis', sans-serif;
 }
 
@@ -69,7 +69,7 @@ body {
 #popup p {
     color: #000;
     font-size: 1.3em;
-    font-family: 'Comfortaa', cursive
+    font-family: 'Comfortaa', cursive;
 }
 
 #popup button {
