@@ -5,6 +5,7 @@
 import os
 import sys
 import webbrowser
+from time import time 
 from datetime import timedelta
 from lib.cipher import get_random_bytes, CryptoAES
 from lib.database.database import Account, Profile
@@ -206,23 +207,23 @@ def delete_usr(user_id):
     profile_db.delete_account(user_id)
     return True
 
-# routes    
+# endpoints    
 @app.before_request
 def single_browser():
-    
     if not 'logged_in' in session:
-        return 
-    
+        return
+
     if not session['logged_in']:
-        return 
+        return
 
-    user_id = session['user_id']  
+    if (time() - session['last_checked']) < 1.5:
+        return
 
-    if not account_db.user_id_exists(user_id):
-        logout()
-        return 
+    user_id = session['user_id']
+    session_token = session['token']
+    session['last_checked'] = time()
 
-    if not account_db.is_logged_in(user_id, session['token']):
+    if not account_db.is_logged_in(user_id, session_token):
         logout()
 
 @app.route('/settings')
@@ -791,6 +792,7 @@ def login():
             session.permanent = True 
             session['logged_in'] = True     
             session['user_id'] = user_id
+            session['last_checked'] = time()
             session['master_key'] = master_key
             session['last_active'] = last_active
             session['username'] = username.title()
