@@ -31,11 +31,12 @@ function sessionCheck() {
     }
 
     updatingSession = true;
-
-    $.ajax({
+    let req = $.ajax({
         type: 'POST',
         url: '/session_check'
-    }).done(function(resp) {
+    });
+
+    req.done(resp => {
         let respCode = resp['resp'];
 
         mouseMoved = false;
@@ -43,8 +44,16 @@ function sessionCheck() {
         lastUpdated = new Date();
 
         if (respCode != 0) {
-            isLoggedOut = true;
-            window.location.href = '/';
+            logout();
         }
     });
+
+    req.fail(() => {
+        logout();
+    });
+}
+
+function logout() {
+    isLoggedOut = true;
+    window.location.href = '/';
 }
