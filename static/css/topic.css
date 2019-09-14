@@ -1,4 +1,4 @@
-@import url("main.css");
+@import url('main.css');
 
 #container {
     padding-top: 5%;
@@ -56,12 +56,13 @@
     background-color: var(--btn-hover);
 }
 
-#new-note-name, #create-note {
+#new-note-name,
+#create-note {
     border: none;
     outline: none;
     font-size: 18px;
     border-radius: var(--btn-radius);
-    font-family: 'Comfortaa', cursive;   
+    font-family: 'Comfortaa', cursive;
 }
 
 #notes {
@@ -89,13 +90,14 @@
     background-color: var(--btn-hover);
 }
 
-.note-name, .note-date {
+.note-name,
+.note-date {
     display: block;
     text-align: center;
 }
 
 .note-name {
-    font-size: 1.3em;
+    font-size: 1em;
     overflow-x: auto;
     margin-bottom: 3px;
     text-align: center;
@@ -128,7 +130,8 @@
 
 /* Wide Screen */
 @media (min-width: 768px) and (max-width: 1024px) {
-    body, #container {
+    body,
+    #container {
         overflow: hidden;
     }
     #navbar {

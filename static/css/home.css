@@ -1,4 +1,4 @@
-@import url("main.css");
+@import url('main.css');
 
 #container {
     padding-top: 5%;
@@ -27,12 +27,13 @@
     background-color: var(--btn-hover);
 }
 
-#new-topic-name, #create-topic {
+#new-topic-name,
+#create-topic {
     border: none;
     outline: none;
     font-size: 18px;
     border-radius: var(--btn-radius);
-    font-family: 'Comfortaa', cursive;   
+    font-family: 'Comfortaa', cursive;
 }
 
 #topics {
@@ -60,13 +61,14 @@
     background-color: var(--btn-hover);
 }
 
-.topic-name, .topic-date {
+.topic-name,
+.topic-date {
     display: block;
     text-align: center;
 }
 
 .topic-name {
-    font-size: 1.3em;
+    font-size: 1em;
     overflow-x: auto;
     margin-bottom: 3px;
     text-align: center;

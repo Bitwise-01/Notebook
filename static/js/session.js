@@ -5,7 +5,7 @@ let isLoggedOut = false;
 let updatingSession = false;
 let lastUpdated = new Date();
 const sessionUpdateDelay = 5 * 1000; // 5 Seconds
-const sessionCheckDelay = (60 * 2 + 5) * 1000; // (Session's TTL + a few seconds) 2 minutes + 5 seconds
+const sessionCheckDelay = (60 * 2 + 15) * 1000; // (Session's TTL + a few seconds) 2 minutes + 15 seconds
 
 $(document).ready(() => {
     $(document).mousemove(() => {

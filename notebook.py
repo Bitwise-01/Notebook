@@ -702,7 +702,7 @@ def delete_user():
     return jsonify(resp)
 
 @app.route('/')
-def index():
+def index():    
     if not 'logged_in' in session:
         session['logged_in'] = False
         return render_template('index.html')
@@ -823,5 +823,4 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    webbrowser.open('http://127.0.0.1:5000', new=2)
     app.run()
