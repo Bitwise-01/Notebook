@@ -4,7 +4,6 @@
 
 import os
 import sys
-import webbrowser
 from time import time 
 from datetime import timedelta
 from lib.cipher import get_random_bytes, CryptoAES
@@ -783,7 +782,8 @@ def login():
             return redirect(url_for('index'))
         
         session['username'] = username 
-        account_data = account_db.authenticate(username, password, request.remote_addr)
+        ip_addr = request.headers.get('X-Forwarded-For')
+        account_data = account_db.authenticate(username, password, ip_addr)
 
         if account_data:
             user_id, master_key, token, last_active, access_level = account_data
