@@ -9,7 +9,7 @@ from datetime import timedelta
 from lib.cipher import get_random_bytes, CryptoAES
 from lib.database.database import Account, Profile
 from lib.const import SessionConst, CredentialConst, ProfileConst, PermissionConst
-from flask import Flask, flash, render_template, request, session, jsonify, redirect, url_for
+from flask import Flask, flash, render_template, request, session, jsonify, redirect, url_for, escape
 
 # app 
 if getattr(sys, 'frozen', False): 
@@ -239,7 +239,7 @@ def update_username():
         resp['msg'] = 'Incomplete form'
         return jsonify(resp)
     
-    username = request.form['username'].strip().lower()
+    username = escape(request.form['username'].strip().lower())
     username_error = invalid_username(username)
 
     if username_error:
@@ -265,9 +265,9 @@ def update_password():
         resp['resp'] = 'Incomplete form'
         return jsonify(resp)
     
-    old_password = request.form['old'].strip()
-    new_password = request.form['new'].strip()
-    confirm_password = request.form['conf'].strip()
+    old_password = escape(request.form['old'].strip())
+    new_password = escape(request.form['new'].strip())
+    confirm_password = escape(request.form['conf'].strip())
 
     if ( 
         (len(old_password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or
@@ -313,7 +313,7 @@ def createtopic():
     if not 'topic_name' in request.form:
         return jsonify(resp)
 
-    topic_name = request.form['topic_name'].strip()
+    topic_name = escape(request.form['topic_name'].strip())
     topic_len = len(topic_name)
         
     if (
@@ -346,7 +346,7 @@ def gettopic():
     
     user_id = session['user_id']
     user_key = get_user_key()
-    topic_id = request.args.get('id')
+    topic_id = escape(request.args.get('id'))
 
     if not profile_db.topic_exists(user_id, topic_id):
         return render_template('topic.html', PermissionConst=PermissionConst)
@@ -363,7 +363,7 @@ def settings_topic():
 
     user_id = session['user_id']
     user_key = get_user_key()
-    topic_id = request.args.get('topic_id')
+    topic_id = escape(request.args.get('topic_id'))
 
     if not profile_db.topic_exists(user_id, topic_id):
         return redirect(url_for('index'))
@@ -380,8 +380,8 @@ def update_topic():
     if not ('topic_id' in request.form and 'modified_name' in request.form):
         return jsonify(resp)
 
-    modified_name = request.form['modified_name'].strip()
-    topic_id = request.form['topic_id'].strip()
+    modified_name = escape(request.form['modified_name'].strip())
+    topic_id = escape(request.form['topic_id'].strip())
     modified_name_len = len(modified_name)
     user_id = session['user_id']
     user_key = get_user_key()
@@ -407,7 +407,7 @@ def delete_topic():
         return jsonify(resp)
 
     user_id = session['user_id']
-    topic_id = request.form['topic_id'].strip()
+    topic_id = escape(request.form['topic_id'].strip())
 
     if not profile_db.topic_exists(user_id, topic_id) :
         return jsonify(resp)
@@ -429,8 +429,8 @@ def createnote():
     if profile_db.get_total_notes(session['user_id']) >= ProfileConst.MAX_NOTES.value:
         return jsonify(resp)
 
-    note_title = request.form['note_title'].strip()
-    topic_id = request.form['topic_id'].strip()
+    note_title = escape(request.form['note_title'].strip())
+    topic_id = escape(request.form['topic_id'].strip())
     note_len = len(note_title)
 
     if (
@@ -452,7 +452,7 @@ def getnotes():
     if not 'topic_id' in request.form:
         return jsonify(resp)
 
-    topic_id = request.form['topic_id'].strip()
+    topic_id = escape(request.form['topic_id'].strip())
 
     if not len(topic_id):
         return jsonify(resp)
@@ -467,8 +467,8 @@ def get_note():
         return redirect(url_for('index'))
     
     user_id = session['user_id']
-    topic_id = request.args.get('topic_id')
-    note_id = request.args.get('note_id')
+    topic_id = escape(request.args.get('topic_id'))
+    note_id = escape(request.args.get('note_id'))
 
     if not (profile_db.topic_exists(user_id, topic_id) and profile_db.note_exists(topic_id, note_id)):
         return redirect(url_for('index'))
@@ -491,9 +491,9 @@ def save_note():
 
     user_id = session['user_id']
     user_key = get_user_key()
-    note_id = request.form['note_id'].strip()
-    topic_id = request.form['topic_id'].strip()
-    note_content = request.form['content'].strip()
+    note_id = escape(request.form['note_id'].strip())
+    topic_id = escape(request.form['topic_id'].strip())
+    note_content = escape(request.form['content'].strip())
 
     if not (profile_db.topic_exists(user_id, topic_id) and profile_db.note_exists(topic_id, note_id)):
         return jsonify(resp)
@@ -509,10 +509,10 @@ def modify_note():
     if not ('topic_id' in request.form and 'note_id' in request.form and 'modified_title' in request.form):
         return jsonify(resp)
 
-    note_title = request.form['modified_title']
+    note_title = escape(request.form['modified_title'])
     modified_title_len = len(note_title)
-    topic_id = request.form['topic_id']
-    note_id = request.form['note_id']
+    topic_id = escape(request.form['topic_id'])
+    note_id = escape(request.form['note_id'])
     user_id = session['user_id']
     user_key = get_user_key()
 
@@ -538,8 +538,8 @@ def delete_note():
         return jsonify(resp)
 
     user_id = session['user_id']
-    note_id = request.form['note_id']
-    topic_id = request.form['topic_id']
+    note_id = escape(request.form['note_id'])
+    topic_id = escape(request.form['topic_id'])
 
     if not (profile_db.topic_exists(user_id, topic_id) and profile_db.note_exists(topic_id, note_id)):
         return jsonify(resp)
@@ -604,7 +604,7 @@ def edit_user():
     if not 'id' in request.args:
         return redirect(url_for('admin'))
     
-    user_id = request.args.get('id')
+    user_id = escape(request.args.get('id'))
 
     if not account_db.user_id_exists(user_id):
         return redirect(url_for('admin'))
@@ -633,8 +633,8 @@ def update_access():
     if not ('user_id' in request.form and 'access_id' in request.form):
         return jsonify(resp)
 
-    user_id = request.form['user_id']
-    access_id = request.form['access_id']
+    user_id = escape(request.form['user_id'])
+    access_id = escape(request.form['access_id'])
 
     if not account_db.user_id_exists(user_id):
         return jsonify(resp)
@@ -672,7 +672,7 @@ def logout_user():
     if not 'user_id' in request.form:
         return jsonify(resp)
 
-    user_id = request.form['user_id']
+    user_id = escape(request.form['user_id'])
 
     if not account_db.user_id_exists(user_id):
         return jsonify(resp)
@@ -690,7 +690,7 @@ def delete_user():
     if not 'user_id' in request.form:
         return jsonify(resp)
 
-    user_id = request.form['user_id']
+    user_id = escape(request.form['user_id'])
 
     if not account_db.user_id_exists(user_id):
         return jsonify(resp)
@@ -734,7 +734,7 @@ def signup():
         flash('Incomplete form', 'error')
         return render_template('register.html')
         
-    username, password, confirm = form['username'].strip(), form['password'], form['confirm']
+    username, password, confirm = escape(form['username'].strip()), escape(form['password']), escape(form['confirm'])
     creds = { 'username': username, 'password': password, 'confirm': confirm if confirm == password else '', 'success': 0 }
     
     if not (username and password and confirm):
@@ -772,8 +772,8 @@ def login():
         if not ('username' in request.form, 'password' in request.form):
             return redirect(url_for('index'))
 
-        username = request.form['username'].strip()
-        password = request.form['password']
+        username = escape(request.form['username'].strip())
+        password = escape(request.form['password'])
 
         if ((len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or 
             (len(username) > CredentialConst.MAX_USERNAME_LENGTH.value) or 

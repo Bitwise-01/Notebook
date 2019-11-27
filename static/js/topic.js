@@ -16,6 +16,7 @@ function createnote() {
     }
 
     isCreatingnote = true;
+    noteTitle = clean(noteTitle);
 
     $.ajax({
         type: 'POST',

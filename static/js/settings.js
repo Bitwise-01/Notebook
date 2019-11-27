@@ -4,7 +4,7 @@ let isPrompt = false;
 
 function changeUsername() {
     let display = $('#usr-resp');
-    let username = $('#username');  
+    let username = $('#username');
 
     if (!username.val().length) {
         return;
@@ -13,16 +13,16 @@ function changeUsername() {
     $.ajax({
         type: 'POST',
         url: '/updateusername',
-        data: { 'username': username.val() }
+        data: { username: username.val() }
     }).done(function(resp) {
         let msg = resp['msg'];
         let code = resp['resp_code'];
-        
+
         display.text(msg);
-        display.css({ 'color': ((code == 0) ? '#28a745' : '#dc3545') });
+        display.css({ color: code == 0 ? '#28a745' : '#dc3545' });
 
         if (code == 0) {
-            username.attr('placeholder', username.val());
+            username.attr('placeholder', clean(username.val()));
             username.val('');
         }
     });
@@ -43,13 +43,13 @@ function changePassword() {
     $.ajax({
         type: 'POST',
         url: '/updatepassword',
-        data: { 'old': oldPassword.val(), 'new': newPassword.val(), 'conf': confirmPassword.val() }
+        data: { old: oldPassword.val(), new: newPassword.val(), conf: confirmPassword.val() }
     }).done(function(resp) {
         let msg = resp['msg'];
         let code = resp['resp_code'];
-        
+
         display.text(msg);
-        display.css({ 'color': ((code == 0) ? '#28a745' : '#dc3545') });
+        display.css({ color: code == 0 ? '#28a745' : '#dc3545' });
 
         if (code == 0) {
             oldPassword.val('');
@@ -62,11 +62,11 @@ function changePassword() {
 function deleteAccount(code) {
     let overlay = $('#overlay');
 
-    overlay.css({'display': (isPrompt ? 'none' : 'block')}); 
-    $('html').css({'overflow': isPrompt ? 'auto' : 'hidden'});
-    $('body').css({'overflow': isPrompt ? 'auto' : 'hidden'});
+    overlay.css({ display: isPrompt ? 'none' : 'block' });
+    $('html').css({ overflow: isPrompt ? 'auto' : 'hidden' });
+    $('body').css({ overflow: isPrompt ? 'auto' : 'hidden' });
     isPrompt = !isPrompt;
-    
+
     if (code == 1) {
         $.ajax({
             type: 'POST',
