@@ -1,7 +1,9 @@
-@import url("main.css");
+@import url('main.css');
 
 #container {
+    margin: 0 auto;
     display: block;
+    text-align: center;
     text-align: -webkit-center;
 }
 
@@ -9,15 +11,18 @@
     margin-top: 2%;
 }
 
-#register-box a, #register-box input, #register-box button {
+#register-box a,
+#register-box input,
+#register-box button {
     font-family: 'Comfortaa', cursive;
 }
 
 #register-box {
     width: 50%;
-	height: 600px;
+    height: 600px;
+    margin: 0 auto;
     margin-top: 10px;
-	border-radius: 2%;
+    border-radius: 2%;
     position: relative;
     background-color: #fff;
     border: 1px solid var(--bg-color);
@@ -28,23 +33,29 @@
 }
 
 #register-box form input {
-	width: 75%;
+    width: 75%;
     border: none;
     outline: none;
-	padding-left: 5px;
+    padding-left: 5px;
     line-height: 2.5em;
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: var(--btn-radius);
 }
 
-#username:focus, #password:focus, #confirm:focus {
+#register-box form button {
+    margin: auto;
+}
+
+#username:focus,
+#password:focus,
+#confirm:focus {
     border: 1px solid var(--btn-color);
-} 
+}
 
 #register {
     width: 26%;
-	height: 35px;
+    height: 35px;
     border: none;
     outline: none;
     display: block;
@@ -52,17 +63,17 @@
     margin-top: 5%;
     white-space: nowrap;
     color: var(--txt-color);
-	border-radius: var(--btn-radius);
+    border-radius: var(--btn-radius);
     background-color: var(--btn-color);
 }
 
 #register:hover {
     cursor: pointer;
-    background-color: var(--btn-hover); 
+    background-color: var(--btn-hover);
 }
 
 #register:active {
-	border: 1px solid var(--bg-color);
+    border: 1px solid var(--bg-color);
 }
 
 #log-in {
@@ -101,7 +112,7 @@
 }
 
 /* Normal Mobile Screen */
-@media (min-width: 321px) and (max-width: 767px) {    
+@media (min-width: 321px) and (max-width: 767px) {
     #register-box form input {
         margin-bottom: 5px;
     }
@@ -116,7 +127,7 @@
 
     #register-box {
         width: 90%;
-	    height: 480px;  
+        height: 480px;
     }
 
     #register-box form {
@@ -127,7 +138,7 @@
         font-size: 12px;
     }
 
-    #register{ 
+    #register {
         margin-bottom: 1px;
     }
 
@@ -143,7 +154,7 @@
     }
 
     #register-box {
-	    height: 490px;  
+        height: 490px;
     }
 
     #register-box form {
@@ -167,13 +178,13 @@
         margin-bottom: 0;
     }
 
-    #register{ 
+    #register {
         margin-bottom: 1px;
     }
 
     #log-in {
         padding-right: 20px;
-    }    
+    }
 }
 
 /* Small Mobile Screen */
@@ -184,7 +195,7 @@
 
     #register-box {
         width: 90%;
-	    height: 390px;  
+        height: 390px;
     }
 
     #register-box form {
@@ -208,12 +219,11 @@
         margin-bottom: 0;
     }
 
-    #register{ 
+    #register {
         margin-bottom: 1px;
     }
 
     #log-in {
         padding-right: 20px;
-    }    
+    }
 }
-
