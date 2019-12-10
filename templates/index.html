@@ -35,6 +35,7 @@
                     />
                     <input type="password" id="password" name="password" placeholder="Password" />
                     <button type="submit" id="login" name="submit">Login</button>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 </form>
 
                 <span id="sign-up">

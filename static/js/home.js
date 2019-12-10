@@ -20,7 +20,10 @@ function createTopic() {
     $.ajax({
         type: 'POST',
         url: '/createtopic',
-        data: { topic_name: topicName }
+        data: { topic_name: topicName },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let respMsg = resp['resp'];
         let topicId = resp['topic_id'];
@@ -64,7 +67,10 @@ function createTopic() {
 function getTopics() {
     $.ajax({
         type: 'POST',
-        url: '/gettopics'
+        url: '/gettopics',
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let topic;
         let topicId;

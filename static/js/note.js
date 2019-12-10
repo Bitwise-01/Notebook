@@ -113,7 +113,10 @@ function save(autoSave = true) {
     $.ajax({
         type: 'POST',
         url: '/save',
-        data: { topic_id: topicId, note_id: noteId, content: html }
+        data: { topic_id: topicId, note_id: noteId, content: html },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let respMsg = resp['resp'];
 
@@ -159,7 +162,10 @@ function modifyName(nameInput) {
     $.ajax({
         type: 'POST',
         url: '/modify',
-        data: { topic_id: topicId, note_id: noteId, modified_title: name }
+        data: { topic_id: topicId, note_id: noteId, modified_title: name },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let respMsg = resp['resp'];
 
@@ -197,7 +203,10 @@ function deleteNote(code) {
         $.ajax({
             type: 'POST',
             url: '/delete',
-            data: { topic_id: topicId, note_id: noteId }
+            data: { topic_id: topicId, note_id: noteId },
+            beforeSend: function(request) {
+                request.setRequestHeader('X-CSRFToken', CSRFToken);
+            }
         }).done(function(resp) {
             let respMsg = resp['resp'];
 

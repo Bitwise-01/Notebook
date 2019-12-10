@@ -21,7 +21,10 @@ function createnote() {
     $.ajax({
         type: 'POST',
         url: '/createnote',
-        data: { topic_id: topicId, note_title: noteTitle }
+        data: { topic_id: topicId, note_title: noteTitle },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let respMsg = resp['resp'];
         let noteId = resp['note_id'];
@@ -66,7 +69,10 @@ function getnotes() {
     $.ajax({
         type: 'POST',
         url: '/getnotes',
-        data: { topic_id: topicId }
+        data: { topic_id: topicId },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let note;
         let noteId;

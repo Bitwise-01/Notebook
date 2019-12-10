@@ -22,7 +22,10 @@ function update() {
     $.ajax({
         type: 'POST',
         url: '/settings/topic/update',
-        data: { topic_id: topicId, modified_name: newName }
+        data: { topic_id: topicId, modified_name: newName },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let respMsg = resp['resp'];
 
@@ -59,7 +62,10 @@ function deleteTopic(code) {
         $.ajax({
             type: 'POST',
             url: '/settings/topic/delete',
-            data: { topic_id: topicId }
+            data: { topic_id: topicId },
+            beforeSend: function(request) {
+                request.setRequestHeader('X-CSRFToken', CSRFToken);
+            }
         }).done(function(resp) {
             let respMsg = resp['resp'];
 

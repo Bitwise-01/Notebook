@@ -33,7 +33,10 @@ function sessionCheck() {
     updatingSession = true;
     let req = $.ajax({
         type: 'POST',
-        url: '/session_check'
+        url: '/session_check',
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     });
 
     req.done(resp => {

@@ -6,6 +6,7 @@ import os
 import sys
 from time import time 
 from datetime import timedelta
+from flask_wtf import CSRFProtect
 from lib.cipher import get_random_bytes, CryptoAES
 from lib.database.database import Account, Profile
 from lib.const import SessionConst, CredentialConst, ProfileConst, PermissionConst
@@ -24,9 +25,12 @@ if getattr(sys, 'frozen', False):
     app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 else:
     app = Flask(__name__)
-
+    
 app.config['SECRET_KEY'] = get_random_bytes(0x20)
 app.permanent_session_lifetime = timedelta(minutes=SessionConst.SESSION_TTL.value)
+
+# Protection against CSRF attack
+CSRFProtect(app)
 
 # databases
 account_db = Account()

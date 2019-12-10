@@ -125,12 +125,12 @@
 
                     let data = lazyEditor.innerText;
                     lazyEditor.innerHTML = '';
-
+                    
                     return data
                 } 
        
                 $(document).ready(() => {
-                    let html = `{{ note['note_content'] }}`;
+                    let html = "{{ note['note_content'] }}";
                     document.getElementById('editor').innerHTML = render(html);          
                 });
             </script>        

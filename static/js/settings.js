@@ -13,7 +13,10 @@ function changeUsername() {
     $.ajax({
         type: 'POST',
         url: '/updateusername',
-        data: { username: username.val() }
+        data: { username: username.val() },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let msg = resp['msg'];
         let code = resp['resp_code'];
@@ -43,7 +46,10 @@ function changePassword() {
     $.ajax({
         type: 'POST',
         url: '/updatepassword',
-        data: { old: oldPassword.val(), new: newPassword.val(), conf: confirmPassword.val() }
+        data: { old: oldPassword.val(), new: newPassword.val(), conf: confirmPassword.val() },
+        beforeSend: function(request) {
+            request.setRequestHeader('X-CSRFToken', CSRFToken);
+        }
     }).done(function(resp) {
         let msg = resp['msg'];
         let code = resp['resp_code'];
@@ -70,7 +76,10 @@ function deleteAccount(code) {
     if (code == 1) {
         $.ajax({
             type: 'POST',
-            url: '/delete_account'
+            url: '/delete_account',
+            beforeSend: function(request) {
+                request.setRequestHeader('X-CSRFToken', CSRFToken);
+            }
         }).done(function(resp) {
             window.location.href = '/';
         });

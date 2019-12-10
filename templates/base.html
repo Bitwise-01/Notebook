@@ -13,6 +13,7 @@
         <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/session.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/csrf-protection.js') }}"></script>
         <script src="{{ url_for('static', filename='js/clean.js') }}"></script>
         {% block links %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
@@ -35,6 +36,7 @@
             </div>
         </div>
 
+        <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}" />
         {% block content %}{% endblock %}
     </body>
 </html>
