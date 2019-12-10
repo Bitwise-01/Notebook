@@ -119,22 +119,19 @@
             <div id="lazy-editor" hidden contenteditable="true"></div>
 
             <script>
-                function render(html, n=1) {
+                function render(html) {
                     lazyEditor = document.getElementById('lazy-editor');
-                    lazyEditor.innerHTML = html;
+                    lazyEditor.innerHTML = html.replace(/&amp;/g, '&');
+
                     let data = lazyEditor.innerText;
-
-                    if (n > 0) {
-                        return render(data, n-1);
-                    }
-
                     lazyEditor.innerHTML = '';
-                    return data 
+
+                    return data
                 } 
-                
+       
                 $(document).ready(() => {
                     let html = `{{ note['note_content'] }}`;
-                    document.getElementById('editor').innerHTML = render(html);            
+                    document.getElementById('editor').innerHTML = render(html);          
                 });
             </script>        
         </div>    		
