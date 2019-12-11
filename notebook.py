@@ -5,8 +5,8 @@
 import os
 import sys
 from time import time 
-from datetime import timedelta
 from flask_wtf import CSRFProtect
+from datetime import timedelta, datetime
 from lib.cipher import get_random_bytes, CryptoAES
 from lib.database.database import Account, Profile
 from lib.const import SessionConst, CredentialConst, ProfileConst, PermissionConst
@@ -727,46 +727,58 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if not 'logged_in' in session:
+
+    if not 'logged_in' in session:       
         return redirect(url_for('index'))
-
-    if not session['logged_in']:
-        if not ('username' in request.form, 'password' in request.form):
-            return redirect(url_for('index'))
-
-        username = escape(request.form['username'].strip())
-        password = escape(request.form['password'])
-
-        if ((len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or 
-            (len(username) > CredentialConst.MAX_USERNAME_LENGTH.value) or 
-            (len(username) < CredentialConst.MIN_USERNAME_LENGTH.value) 
-           ):
-            return redirect(url_for('index'))
-        
-        session['username'] = username 
-        ip_addr = request.headers.get('X-Forwarded-For')
-        account_data, err_msg = account_db.authenticate(username, password, ip_addr)
-
-        if account_data:
-            user_id, master_key, token, last_active, access_level = account_data
-                        
-            session['token'] = token
-            session.permanent = True 
-            session['logged_in'] = True     
-            session['user_id'] = user_id
-            session['last_checked'] = time()
-            session['master_key'] = master_key
-            session['last_active'] = last_active
-            session['username'] = username.title()
-            session['access_level'] = access_level
-
-            return redirect(url_for('index'))
-        else:
-            flash(err_msg, 'error')
-            return redirect(url_for('index'))
-    else:
+    
+    if session['logged_in']:
         return redirect(url_for('index'))
+    
+    if not ('username' in request.form and 'password' in request.form and 'timestamp' in request.form):
+        return jsonify({'is_authenticated': False, 'msg': 'Provide all requirements'})
+    
+    username = escape(request.form['username'].strip())
+    password = escape(request.form['password'])
+    timestamp = escape(request.form['timestamp'])
 
+    if not timestamp.isdigit():
+        return jsonify({'is_authenticated': False, 'msg': 'Invalid timestamp'})
+
+    current_time = int(timestamp)/1000
+
+    try:
+        datetime.fromtimestamp(current_time)
+    except:
+        return jsonify({'is_authenticated': False, 'msg': 'Invalid timestamp'})
+
+
+    if ((len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or 
+        (len(username) > CredentialConst.MAX_USERNAME_LENGTH.value) or 
+        (len(username) < CredentialConst.MIN_USERNAME_LENGTH.value) 
+        ):
+        return jsonify({'is_authenticated': False, 'msg': 'Account does not exist'})
+    
+    session['username'] = username 
+    ip_addr = request.headers.get('X-Forwarded-For')
+    account_data, err_msg = account_db.authenticate(username, password, ip_addr, current_time)
+
+    if not account_data:
+        return jsonify({'is_authenticated': False, 'msg': err_msg})
+
+    user_id, master_key, token, last_active, access_level = account_data
+                
+    session['token'] = token
+    session.permanent = True 
+    session['logged_in'] = True     
+    session['user_id'] = user_id
+    session['last_checked'] = time()
+    session['master_key'] = master_key
+    session['last_active'] = last_active
+    session['username'] = username.title()
+    session['access_level'] = access_level
+
+    return jsonify({'is_authenticated': True, 'msg': ''})
+    
 @app.route('/delete_account', methods=['POST'])
 @login_required
 def delete_account():

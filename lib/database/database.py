@@ -154,7 +154,7 @@ class Account(DatabaseWrapper):
             'SELECT password FROM Account WHERE username=?;', [username])
         return True if bcrypt.hashpw(password.encode(), hashed_password) == hashed_password else False
 
-    def authenticate(self, username, password, ip_address):
+    def authenticate(self, username, password, ip_address, current_time):
         username = username.lower()
 
         if not self.account_exists(username):
@@ -181,7 +181,7 @@ class Account(DatabaseWrapper):
         master_key = self.generate_master_key(user_id, password)
         access_level = self.get_access_level(user_id)
         token = self.generate_session_token(user_id)
-        last_active = self.get_last_active(user_id)
+        last_active = self.get_last_active(user_id, current_time)
         self.login(user_id, token, ip_address)
 
         return [user_id, master_key, token, last_active, access_level], ''
@@ -329,11 +329,11 @@ class Account(DatabaseWrapper):
     def get_access_level(self, user_id):
         return self.db_query('SELECT access_level FROM Account WHERE user_id=?;', [user_id])
 
-    def get_last_active(self, user_id):
+    def get_last_active(self, user_id, current_time):
         epoch = self.db_query(
             'SELECT last_online FROM Status WHERE stat_id=?;', [user_id])
         self.db_update('UPDATE Status SET last_online=? WHERE stat_id=?;', [
-                       time(), user_id])
+                       current_time, user_id])
         return datetime.fromtimestamp(epoch).strftime('%b %d, %Y at %I:%M %p')
 
     def get_last_online(self, user_id):
