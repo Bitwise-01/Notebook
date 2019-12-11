@@ -113,60 +113,6 @@ def invalid_password(username, password, confirm):
     if ''.join([_ for _ in username if _.isalpha()]).lower() in password.lower():
         return 'Password must not contain your username'
         
-def get_password_rules(username, password):
-    rules = []
-
-    rules.append(
-        {
-            'msg': 'Password must not contain your username',
-            'status': 'error' if ''.join([_ for _ in username if _.isalpha()]).lower() in password.lower() else 'success'
-        }
-    )
-
-    rules.append(
-        {
-            'msg': 'Password must contain at least 1 capital letter',
-            'status': 'error' if not [_ for _ in password if _.isalpha() if _ == _.upper()] else 'success'
-        }
-    )
-
-    rules.append(
-        {
-            'msg': 'Password must be at least {} characters long'.format(CredentialConst.MIN_PASSWORD_LENGTH.value),
-            'status': 'error' if len(password) < CredentialConst.MIN_PASSWORD_LENGTH.value else 'success'
-        }
-    )
-
-    rules.append(
-        {
-            'msg': 'Password must not be longer than {} characters'.format(CredentialConst.MAX_PASSWORD_LENGTH.value),
-            'status': 'error' if len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value else 'success'
-        }
-    )
-
-    rules.append(
-        {
-            'msg': 'Password must contain at least 1 space character',
-            'status': 'error' if not ' ' in password else 'success'
-        }
-    )
-
-    rules.append(
-        {
-            'msg': 'Password must not start or end with a space character',
-            'status': 'error' if password[0] == ' ' or password[-1] == ' ' else 'success'
-        }
-    )
-
-    rules.append(
-        {
-            'msg': 'Password must not end with a number',
-            'status': 'error' if password[-1].isdigit() else 'success'
-        }
-    )
-
-    return rules if [rule for rule in rules if rule['status'] == 'error'] else []
-
 def get_user_key():
     user_id = session['user_id']
     master_key = session['master_key']
@@ -730,42 +676,54 @@ def signup():
             return redirect(url_for('index'))
     
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('register.html', min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
 
     form = request.form 
 
     if not ('username' in form and 'password' in form and 'confirm' in form):
         flash('Incomplete form', 'error')
-        return render_template('register.html')
+        return render_template('register.html', min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
+
         
     username, password, confirm = escape(form['username'].strip()), escape(form['password']), escape(form['confirm'])
     creds = { 'username': username, 'password': password, 'confirm': confirm if confirm == password else '', 'success': 0 }
     
     if not (username and password and confirm):
         flash('Incomplete form', category='error')
-        return render_template('register.html', data=creds)  
+        return render_template('register.html', data=creds, min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
+ 
 
     username_error = invalid_username(username)
 
     if username_error:
         flash(username_error, 'error')
-        return render_template('register.html', data=creds, rules=get_password_rules(username, password))   
+        return render_template('register.html', data=creds, 
+        min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
     
     if account_db.account_exists(username.lower()):
         flash('{} already exists'.format(username).format(username), 'error')
-        return render_template('register.html', data=creds)      
+        return render_template('register.html', data=creds, min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
+     
 
     password_error = invalid_password(username, password, confirm)
 
     if password_error:
         flash(password_error, 'error')
-        return render_template('register.html', data=creds, rules=get_password_rules(username, password))    
+        return render_template('register.html', data=creds, min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
+   
     
     creds['success'] = 1
     session['logged_in'] = False
     account_db.register(username, password.strip())
    
-    return render_template('register.html', data=creds)   
+    return render_template('register.html', data=creds, min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
+        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -787,7 +745,7 @@ def login():
         
         session['username'] = username 
         ip_addr = request.headers.get('X-Forwarded-For')
-        account_data = account_db.authenticate(username, password, ip_addr)
+        account_data, err_msg = account_db.authenticate(username, password, ip_addr)
 
         if account_data:
             user_id, master_key, token, last_active, access_level = account_data
@@ -804,7 +762,7 @@ def login():
 
             return redirect(url_for('index'))
         else:
-            flash('Invalid username or password', 'error')
+            flash(err_msg, 'error')
             return redirect(url_for('index'))
     else:
         return redirect(url_for('index'))

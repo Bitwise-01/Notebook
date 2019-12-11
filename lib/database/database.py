@@ -157,22 +157,34 @@ class Account(DatabaseWrapper):
     def authenticate(self, username, password, ip_address):
         username = username.lower()
 
-        if self.account_exists(username):
-            user_id = self.get_user_id(username)
+        if not self.account_exists(username):
+            return [], 'Account does not exist'
 
-            if not self.is_locked(user_id):
-                if self.check_password(username, password):
+        user_id = self.get_user_id(username)
 
-                    master_key = self.generate_master_key(user_id, password)
-                    access_level = self.get_access_level(user_id)
-                    token = self.generate_session_token(user_id)
-                    last_active = self.get_last_active(user_id)
-                    self.login(user_id, token, ip_address)
+        if self.is_locked(user_id):
+            return [], 'Your account is temporarily locked'
 
-                    return user_id, master_key, token, last_active, access_level
-                else:
-                    self.failed_attempt(user_id)
-        return None
+        if not self.check_password(username, password):
+
+            self.failed_attempt(user_id)
+            attempts_made = self.failed_attempts_counts(user_id)
+
+            attempts_left = (
+                DatabaseConst.MAX_FAILED_ATTEMPTS.value - attempts_made)
+
+            if attempts_left == 0:
+                return [], 'Your account is temporarily locked'
+
+            return [], f'Invalid password; {attempts_left } attempt(s) remaining'
+
+        master_key = self.generate_master_key(user_id, password)
+        access_level = self.get_access_level(user_id)
+        token = self.generate_session_token(user_id)
+        last_active = self.get_last_active(user_id)
+        self.login(user_id, token, ip_address)
+
+        return [user_id, master_key, token, last_active, access_level], ''
 
     def login(self, user_id, token, ip_address):
         self.db_update(
@@ -203,13 +215,17 @@ class Account(DatabaseWrapper):
 
     def failed_attempt(self, user_id):
         current_value = self.failed_attempts_counts(user_id)
+        new_value = current_value + 1
+
+        self.db_update('''
+        UPDATE Attempt 
+        SET attempts_made=? 
+        WHERE ampt_id=?;''',
+                       [new_value, user_id])
 
         if current_value >= DatabaseConst.MAX_FAILED_ATTEMPTS.value-1:
             if not self.is_locked(user_id):
                 self.lock_account(user_id)
-        else:
-            self.db_update('UPDATE Attempt SET attempts_made=? WHERE ampt_id=?;', [
-                           current_value + 1, user_id])
 
     def failed_attempts_counts(self, user_id):
         return self.db_query('SELECT attempts_made FROM Attempt WHERE ampt_id=?;', [user_id])
