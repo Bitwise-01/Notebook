@@ -67,6 +67,7 @@
                     let usernameInput = document.getElementById('username');
                     let passwordInput = document.getElementById('password');
                     let confirmInput = document.getElementById('confirm');
+                    let timestamp = new Date().getTime();
 
                     usernameInput.value = username;
                     passwordInput.value = password;
@@ -76,7 +77,7 @@
                         $.ajax({
                             type: 'POST',
                             url: '/login',
-                            data: { username: username, password: password },
+                            data: { username: username, password: password, timestamp: timestamp },
                             beforeSend: function(request) {
                                 request.setRequestHeader('X-CSRFToken', $('#csrf_token').val());
                             }

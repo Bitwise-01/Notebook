@@ -3,8 +3,21 @@
 let isCreatingTopic = false;
 
 $(document).ready(() => {
+    getLastActive();
     getTopics();
 });
+
+function getLastActive() {
+    let timestamp = $('#last-active-timestamp').val();
+    let t = new Date(timestamp * 1000);
+    let lastActive = null;
+
+    try {
+        lastActive = dateFormat(t, 'mmm dd, yyyy') + ' at ' + dateFormat(t, 'hh:MM TT');
+        lastActive = $('<p>', { id: 'last-active' }).append('last accessed on ' + lastActive);
+        $('#last-active').replaceWith(lastActive);
+    } catch (e) {}
+}
 
 function createTopic() {
     let topicField = document.getElementById('new-topic-name');
@@ -20,7 +33,7 @@ function createTopic() {
     $.ajax({
         type: 'POST',
         url: '/createtopic',
-        data: { topic_name: topicName },
+        data: { topic_name: topicName, time_stamp: new Date().getTime() },
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', CSRFToken);
         }
@@ -28,6 +41,9 @@ function createTopic() {
         let respMsg = resp['resp'];
         let topicId = resp['topic_id'];
         let dateCreated = resp['date_created'];
+
+        let t = new Date(dateCreated * 1000);
+        dateCreated = dateFormat(t, 'mmm dd, yyyy');
 
         if (topicId) {
             let $topic = $('<div>', { class: 'topic' });
@@ -85,9 +101,10 @@ function getTopics() {
         for (let n = 0; n < topics.length; n++) {
             topic = topics[n];
             topicId = topic['topic_id'];
-            topicName = topic['topic_name'];
             dateCreated = topic['date_created'];
+            topicName = decodeEscaped(topic['topic_name']);
 
+            dateCreated = dateFormat(new Date(dateCreated * 1000), 'mmm dd, yyyy');
             $topic = $('<div>', { class: 'topic' });
 
             $topic.attr('title', topicName);

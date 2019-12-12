@@ -21,7 +21,7 @@ function createnote() {
     $.ajax({
         type: 'POST',
         url: '/createnote',
-        data: { topic_id: topicId, note_title: noteTitle },
+        data: { topic_id: topicId, note_title: noteTitle, time_stamp: new Date().getTime() },
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', CSRFToken);
         }
@@ -36,6 +36,8 @@ function createnote() {
 
             let $noteTitle = $('<span>', { class: 'note-name' });
             let $noteDate = $('<span>', { class: 'note-date' });
+
+            dateCreated = dateFormat(new Date(dateCreated * 1000), 'mmm dd, yyyy');
 
             $noteTitle.append(noteTitle);
             $noteDate.append(dateCreated);
@@ -87,10 +89,11 @@ function getnotes() {
         for (let n = 0; n < notes.length; n++) {
             note = notes[n];
             noteId = note['note_id'];
-            noteTitle = note['note_title'];
             dateCreated = note['date_created'];
+            noteTitle = decodeEscaped(note['note_title']);
 
             $note = $('<div>', { class: 'note' });
+            dateCreated = dateFormat(new Date(dateCreated * 1000), 'mmm dd, yyyy');
 
             $note.attr('title', noteTitle);
             $note.attr('onclick', `location.href='/note?topic_id=${topicId}&note_id=${noteId}'`);

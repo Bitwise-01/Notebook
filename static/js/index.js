@@ -19,15 +19,19 @@ function login() {
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', $('#csrf_token').val());
         }
-    }).done(resp => {
-        let isAuthen = resp['is_authenticated'];
-        let msg = resp['msg'];
+    })
+        .done(resp => {
+            let isAuthen = resp['is_authenticated'];
+            let msg = resp['msg'];
 
-        if (!isAuthen) {
-            let Output = $('<span>', { id: 'msg', class: 'message error' }).append(msg);
-            $('#msg').replaceWith(Output);
-        } else {
+            if (!isAuthen) {
+                let Output = $('<span>', { id: 'msg', class: 'message error' }).append(msg);
+                $('#msg').replaceWith(Output);
+            } else {
+                window.location.href = '/';
+            }
+        })
+        .fail(() => {
             window.location.href = '/';
-        }
-    });
+        });
 }

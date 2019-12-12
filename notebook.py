@@ -122,12 +122,12 @@ def get_user_key():
 
     return decrypted_user_key
 
-def create_topic(topic_name):
+def create_topic(topic_name, time_stamp):
     user_key = get_user_key()
     user_id = session['user_id']
     topic_name = topic_name.strip()
 
-    return profile_db.add_topic(user_id, user_key, topic_name)
+    return profile_db.add_topic(user_id, user_key, topic_name, time_stamp)
 
 def get_topics():
     user_key = get_user_key()
@@ -135,11 +135,11 @@ def get_topics():
 
     return profile_db.decrypt_topics(user_id, user_key)  
 
-def create_note(topic_id, note_title):
+def create_note(topic_id, note_title, time_stamp):
     user_key = get_user_key()
     note_title = note_title.strip()
 
-    return profile_db.add_note(topic_id, user_key, note_title, '')
+    return profile_db.add_note(topic_id, user_key, note_title, '', time_stamp)
 
 def get_notes(topic_id):
     user_key = get_user_key()
@@ -260,7 +260,19 @@ def update_password():
 def createtopic():
     resp = { 'topic_id': '', 'date_created': '', 'resp': 'error-msg' }
 
-    if not 'topic_name' in request.form:
+    if not ('topic_name' in request.form and 'time_stamp' in request.form):
+        return jsonify(resp)
+    
+    timestamp = request.form['time_stamp']
+
+    if not timestamp.isdigit():
+        return jsonify(resp)
+
+    current_time = int(timestamp)/1000
+
+    try:
+        datetime.fromtimestamp(current_time)
+    except:
         return jsonify(resp)
 
     topic_name = escape(request.form['topic_name'].strip())
@@ -276,7 +288,7 @@ def createtopic():
         return jsonify(resp)
         
     resp['resp'] = 'success-msg'
-    resp['topic_id'], resp['date_created'] = create_topic(topic_name)
+    resp['topic_id'], resp['date_created'] = create_topic(topic_name, current_time)
 
     return jsonify(resp) 
 
@@ -302,7 +314,6 @@ def gettopic():
         return render_template('topic.html', PermissionConst=PermissionConst)
 
     topic = profile_db.decrypt_topic(topic_id, user_key)
-    
     return render_template('topic.html', topic=topic, PermissionConst=PermissionConst)
 
 @app.route('/settings/topic')
@@ -373,14 +384,15 @@ def delete_topic():
 def createnote():
     resp = { 'note_id': '', 'date_created': '', 'resp': 'error-msg' }
 
-    if not ('topic_id' in request.form and 'note_title' in request.form):
+    if not ('topic_id' in request.form and 'note_title' in request.form and 'time_stamp' in request.form):
         return jsonify(resp)
 
     if profile_db.get_total_notes(session['user_id']) >= ProfileConst.MAX_NOTES.value:
-        return jsonify(resp)
+        return jsonify(resp)    
 
     note_title = escape(request.form['note_title'].strip())
     topic_id = escape(request.form['topic_id'].strip())
+    timestamp = escape(request.form['time_stamp'])
     note_len = len(note_title)
 
     if (
@@ -388,9 +400,19 @@ def createnote():
         (note_len > ProfileConst.MAX_NOTE_LENGTH.value)
        ):
         return jsonify(resp)
+
+    if not timestamp.isdigit():
+        return jsonify(resp)
+
+    current_time = int(timestamp)/1000
+
+    try:
+        datetime.fromtimestamp(current_time)
+    except:
+        return jsonify(resp)
         
     resp['resp'] = 'success-msg'
-    resp['note_id'], resp['date_created'] = create_note(topic_id, note_title)
+    resp['note_id'], resp['date_created'] = create_note(topic_id, note_title, current_time)
 
     return jsonify(resp) 
 
@@ -665,9 +687,8 @@ def index():
 
         return render_template('index.html', username=username)
 
-    flash(session['last_active'])
-
-    return render_template('home.html', PermissionConst=PermissionConst)
+    last_active_timestamp = session['last_active']
+    return render_template('home.html', PermissionConst=PermissionConst, lastActiveTimestamp=last_active_timestamp)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -717,7 +738,6 @@ def signup():
         return render_template('register.html', data=creds, min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
         max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
    
-    
     creds['success'] = 1
     session['logged_in'] = False
     account_db.register(username, password.strip())
@@ -750,7 +770,6 @@ def login():
         datetime.fromtimestamp(current_time)
     except:
         return jsonify({'is_authenticated': False, 'msg': 'Invalid timestamp'})
-
 
     if ((len(password) > CredentialConst.MAX_PASSWORD_LENGTH.value) or 
         (len(username) > CredentialConst.MAX_USERNAME_LENGTH.value) or 

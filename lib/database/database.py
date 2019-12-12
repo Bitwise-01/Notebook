@@ -330,11 +330,11 @@ class Account(DatabaseWrapper):
         return self.db_query('SELECT access_level FROM Account WHERE user_id=?;', [user_id])
 
     def get_last_active(self, user_id, current_time):
-        epoch = self.db_query(
+        last_online = self.db_query(
             'SELECT last_online FROM Status WHERE stat_id=?;', [user_id])
         self.db_update('UPDATE Status SET last_online=? WHERE stat_id=?;', [
                        current_time, user_id])
-        return datetime.fromtimestamp(epoch).strftime('%b %d, %Y at %I:%M %p')
+        return last_online
 
     def get_last_online(self, user_id):
         epoch = self.db_query(
@@ -411,8 +411,7 @@ class Profile(DatabaseWrapper):
             'SELECT * FROM Topic WHERE user_id=? AND topic_id=?;', [user_id, topic_id], False)
         return True if len(data) else False
 
-    def add_topic(self, user_id, user_key, topic_name):
-        data_created = time()
+    def add_topic(self, user_id, user_key, topic_name, time_stamp):
         topic_id = sha256(user_id.encode() +
                           str(time()).encode() + urandom(16)).digest().hex()
         encrypted_topic_name = b64encode(CryptoAES.encrypt(
@@ -421,9 +420,9 @@ class Profile(DatabaseWrapper):
         self.db_update('''
             INSERT INTO Topic(user_id, topic_id, encrypted_topic_name, date_created)
             VALUES(?, ?, ?, ?);
-        ''', [user_id, topic_id, encrypted_topic_name, data_created])
+        ''', [user_id, topic_id, encrypted_topic_name, time_stamp])
 
-        return topic_id, datetime.fromtimestamp(data_created).strftime('%b %d, %Y')
+        return topic_id, time_stamp
 
     def modify_topic(self, topic_id, user_key, modified_topic_name):
         encrypted_topic_name = b64encode(CryptoAES.encrypt(
@@ -458,8 +457,6 @@ class Profile(DatabaseWrapper):
             WHERE topic_id=?;
         ''', [topic_id], False)[0]
 
-        date_created = datetime.fromtimestamp(
-            date_created).strftime('%b %d, %Y')
         topic_name = CryptoAES.decrypt(
             b64decode(encrypted_topic_name), user_key).decode()
         return {'topic_id': topic_id, 'topic_name': topic_name, 'date_created': date_created, 'notes': note_ids}
@@ -479,8 +476,8 @@ class Profile(DatabaseWrapper):
             'SELECT * FROM Note WHERE topic_id=? AND note_id=?;', [topic_id, note_id], False)
         return True if len(data) else False
 
-    def add_note(self, topic_id, user_key, note_title, content):
-        date_created = time()
+    def add_note(self, topic_id, user_key, note_title, content, time_stamp):
+        date_created = time_stamp
         encrypted_content = b64encode(CryptoAES.encrypt(
             content.encode(), user_key)).decode()
         encrypted_title = b64encode(CryptoAES.encrypt(
@@ -493,7 +490,7 @@ class Profile(DatabaseWrapper):
             VALUES(?, ?, ?, ?, ?); 
         ''', [topic_id, note_id, date_created, encrypted_title, encrypted_content])
 
-        return note_id, datetime.fromtimestamp(date_created).strftime('%b %d, %Y')
+        return note_id, date_created
 
     def modify_note_title(self, topic_id, note_id, note_title, user_key):
         encrypted_title = b64encode(CryptoAES.encrypt(
@@ -530,8 +527,6 @@ class Profile(DatabaseWrapper):
 
             title = CryptoAES.decrypt(
                 b64decode(encrypted_title), user_key).decode()
-            date_created = datetime.fromtimestamp(
-                date_created).strftime('%b %d, %Y')
             content = CryptoAES.decrypt(
                 b64decode(encrypted_content), user_key).decode()
 
@@ -545,8 +540,6 @@ class Profile(DatabaseWrapper):
 
             title = CryptoAES.decrypt(
                 b64decode(encrypted_title), user_key).decode()
-            date_created = datetime.fromtimestamp(
-                date_created).strftime('%b %d, %Y')
 
             return {'note_id': note_id, 'note_title': title, 'date_created': date_created}
 

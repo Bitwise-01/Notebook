@@ -6,3 +6,9 @@ function clean(str) {
         .replace(/</g, '&lt;')
         .replace(/"/g, '&quot;');
 }
+
+function decodeEscaped(str) {
+    let textArea = document.createElement('textarea');
+    textArea.innerHTML = str;
+    return textArea.value;
+}
