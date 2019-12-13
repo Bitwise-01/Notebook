@@ -1,25 +1,40 @@
 'use strict';
 
-let isSaved = true;
-let initHtml = null;
-let lastHtml = null;
-let isPrompt = false;
-let isActive = false;
+const countDownDefault = 5;
+const saveError = 'Failed to save note';
+const textEditor = document.getElementById('editor');
+
 let lastSaved = null;
+let initHtmlHash = null;
+let lastHtmlHash = null;
+
+let isSaved = true;
+let isPrompt = false;
 let autoSaved = false;
 let isDisplayed = false;
 let isModifyingName = false;
-const autoSaveDelay = 15 * 1000; // 15 * 1000 => 15(sec)
-const saveError = 'Failed to save note';
-const textEditor = document.getElementById('editor');
+
+let countDown = countDownDefault;
 
 $(document).ready(() => {
     keypress();
     renderFonts();
-    setInterval(save, autoSaveDelay);
+    setInterval(activeSave, 1000);
+
     document.getElementById('font-size').selectedIndex = 2;
-    initHtml = document.getElementById('editor').innerHTML.trim();
+    sha256(document.getElementById('editor').innerHTML.trim()).then(r => {
+        initHtmlHash = r;
+    });
 });
+
+async function activeSave() {
+    if (countDown > 0) {
+        countDown--;
+    } else {
+        await save();
+        countDown = countDownDefault;
+    }
+}
 
 function execute(cmd, value) {
     document.execCommand(cmd, false, value);
@@ -41,7 +56,7 @@ function renderFonts() {
 
 function keypress() {
     document.addEventListener('keydown', e => {
-        isActive = true;
+        countDown = countDownDefault;
 
         if ((e.ctrlKey || e.metaKey) && String.fromCharCode(e.which).toLowerCase() == 's') {
             e.preventDefault();
@@ -50,7 +65,6 @@ function keypress() {
 
         if (e.shiftKey && e.keyCode == 9) {
             execute('outdent');
-            isActive = false;
             return;
         }
 
@@ -58,16 +72,20 @@ function keypress() {
             e.preventDefault();
             execute('indent');
         }
-
-        isActive = false;
     });
 }
 
-function save(autoSave = true) {
+async function save(autoSave = true) {
     let noteId = $('#note-id').text();
     let topicId = $('#topic-id').text();
     let timeDisplay = $('#time-display');
+
+    let htmlHash = null;
     let html = document.getElementById('editor').innerHTML.trim();
+
+    await sha256(html).then(r => {
+        htmlHash = r;
+    });
 
     if (!isSaved) {
         if (!timeDisplay.text()) {
@@ -81,32 +99,31 @@ function save(autoSave = true) {
         modify();
     }
 
-    if (autoSave && !html.length) {
+    if (autoSave && html.length == 0) {
         return;
     }
 
-    if (initHtml == html) {
+    if (initHtmlHash == htmlHash) {
         return;
     }
 
-    if (initHtml) {
-        initHtml = null;
+    if (initHtmlHash) {
+        initHtmlHash = null;
     }
 
-    if (html == lastHtml) {
+    if (htmlHash == lastHtmlHash) {
         let diff = Math.round((new Date().getTime() - lastSaved.getTime()) / 1000);
 
-        if (diff < 60) {
+        if (diff <= 15) {
             timeDisplay.text(autoSaved ? `Auto saved ${diff} seconds ago` : `Saved ${diff} seconds ago`);
-        } else {
+        } else if (diff >= 60) {
             let time = lastSaved.toLocaleTimeString();
+            time = time.slice(0, time.match(/\s/).index);
             timeDisplay.text(autoSaved ? `Auto saved at ${time}` : `Saved at ${time}`);
+        } else {
+            timeDisplay.text('');
         }
 
-        return;
-    }
-
-    if (autoSave && isActive) {
         return;
     }
 
@@ -135,7 +152,8 @@ function save(autoSave = true) {
             autoSaved = false;
         }
 
-        lastHtml = html;
+        lastHtmlHash = htmlHash;
+        countDown = countDownDefault;
     });
 }
 
@@ -215,4 +233,32 @@ function deleteNote(code) {
             }
         });
     }
+}
+
+async function sha256(str) {
+    const min = 0;
+    const max = 16;
+
+    // encode as UTF-8
+    const msgBuffer = new TextEncoder('utf-8').encode(str);
+
+    // hash the str
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+    // convert ArrayBuffer to Array
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+    // convert bytes to hex string
+    const hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+
+    const a = hashHex.slice(min, max);
+    const b = hashHex.slice(-max);
+    const c = hashHex.slice(max, max * 2);
+
+    const d = c.slice(c.length / 2);
+    const e = b.slice(0, b.length / 2);
+    const f = a.slice(0, a.length / 2);
+    const g = a.slice(a.length / 2);
+
+    return g + d + f + e;
 }
