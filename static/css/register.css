@@ -22,9 +22,9 @@
     height: 600px;
     margin: 0 auto;
     margin-top: 10px;
-    border-radius: 2%;
     position: relative;
     background-color: #fff;
+    border-radius: var(--btn-radius);
     border: 1px solid var(--bg-color);
 }
 
