@@ -1,4 +1,4 @@
-@import url("main.css");
+@import url('main.css');
 
 html {
     position: relative;
@@ -15,15 +15,20 @@ body {
 
 #topic-name a {
     color: #fff;
-    font-size: 1.5em;
+    font-size: 14px;
     text-align: center;
     text-decoration: none;
-    color: var(--btn-color);  
+    color: var(--btn-color);
     font-family: 'Comfortaa', cursive;
 }
 
+#topic-name a,
+#note-title,
+#name {
+    font-size: 16px;
+}
+
 #topic-name span {
-    font-size: 1.2em;
     text-align: center;
     font-family: 'Comfortaa', cursive;
 }
@@ -38,7 +43,6 @@ body {
     color: #000;
     padding: 0.2% 10px;
     margin: 1% auto 5% auto;
-    border-radius: 10px 10px 0 0;
     background-color: var(--btn-hover);
 }
 
@@ -47,17 +51,23 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
+#buttons section {
+    display: inline;
+    margin: 10px;
+}
+
 #buttons button {
     border: none;
     outline: none;
     color: #000;
-    font-size: 16px;
     border-radius: 5%;
+    margin-right: -5px !important;
     background-color: transparent;
     font-family: 'Times New Roman', Times, serif;
 }
 
-#buttons button:hover, .img-icon:hover {
+#buttons button:hover,
+.img-icon:hover {
     cursor: pointer;
     background-color: #fff;
 }
@@ -87,18 +97,22 @@ body {
     margin-bottom: -8px;
 }
 
-input[type="color"]:first-of-type {
+input[type='color']:first-of-type {
     margin-left: 10px;
 }
 
-input[type="color"], select {
+input[type='color'],
+select {
     border: none;
     height: 20px;
     outline: none;
     border-radius: 2px;
 }
 
-input[type="color"]:hover, #fonts, #font-size, #font-format {
+input[type='color']:hover,
+#fonts,
+#font-size,
+#font-format {
     cursor: pointer;
 }
 
@@ -168,7 +182,6 @@ select {
     padding: 5px;
     border: none;
     outline: none;
-    font-size: 1.2em;
     visibility: hidden;
     text-align: center;
     border-radius: var(--btn-radius);
@@ -183,20 +196,19 @@ select {
 
 /* Mobile Screen */
 @media (min-width: 300px) and (max-width: 767px) {
-
     #popup {
         top: 40%;
     }
-    
+
     #popup p {
-        font-size: 1em;        
+        font-size: 1em;
     }
-    
+
     #popup button {
         font-size: 12px;
         margin: 5px 1px;
         border-radius: 5px;
-        font-family: 'Comfortaa', cursive
+        font-family: 'Comfortaa', cursive;
     }
 
     #container {
@@ -215,20 +227,31 @@ select {
         margin: 2% auto;
     }
 
+    #text-editor {
+        border-radius: 0;
+    }
+
+    .layer section > * {
+        margin: 3px;
+    }
+
+    .layer:first-child .img-icon {
+        margin-bottom: -8px;
+    }
+
     #buttons {
-        padding: 10px;
+        padding: 1px;
         margin-bottom: 2%;
         border-radius: 10px 10px 0 0;
     }
 
     #buttons > div {
-        display: block;
+        display: inline;
         text-align: right;
-        margin-bottom: 5px;
     }
 
     #controls {
-        margin: 25px 0 10px 10px;
+        margin: 10px 0 0 1px;
     }
 
     #controls button {

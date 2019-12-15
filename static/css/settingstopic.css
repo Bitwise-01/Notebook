@@ -1,4 +1,4 @@
-@import url("main.css");
+@import url('main.css');
 
 #container {
     padding-top: 15%;
@@ -48,7 +48,7 @@
     padding: 5%;
     display: block;
     margin: 0 auto;
-    font-size: 1.2em;
+    font-size: 15px;
     color: var(--txt-color);
     background-color: var(--btn-color);
 }
@@ -63,11 +63,12 @@
     font-size: 18px;
 }
 
-#new-topic-name, #update-topic {
+#new-topic-name,
+#update-topic {
     border: none;
     outline: none;
     border-radius: var(--btn-radius);
-    font-family: 'Comfortaa', cursive;   
+    font-family: 'Comfortaa', cursive;
 }
 
 #danger {
@@ -80,7 +81,7 @@
     border: none;
     outline: none;
     color: #fff;
-    font-size: 1.2em;
+    font-size: 15px;
     background-color: var(--drk-red);
     border-radius: var(--btn-radius);
     font-family: 'Comfortaa', cursive;

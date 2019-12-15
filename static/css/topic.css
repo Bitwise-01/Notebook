@@ -5,18 +5,18 @@
 }
 
 #settings {
-    font-size: 1em;
+    font-size: 12px;
     margin-left: 20px;
     margin-bottom: 15px;
     display: inline-block;
     text-decoration: none;
-    color: var(--txt-color);
+    color: var(--btn-color);
     font-family: 'Comfortaa', cursive;
 }
 
 #settings:hover {
     cursor: pointer;
-    color: var(--btn-color);
+    color: var(--btn-hover);
 }
 
 #settings img {
@@ -28,7 +28,7 @@
 
 #topic-name {
     margin-top: -6px;
-    font-size: 1.3em;
+    font-size: 16px;
     text-align: center;
     font-family: 'Comfortaa', cursive;
 }
@@ -60,7 +60,7 @@
 #create-note {
     border: none;
     outline: none;
-    font-size: 18px;
+    font-size: 14px;
     border-radius: var(--btn-radius);
     font-family: 'Comfortaa', cursive;
 }
@@ -75,9 +75,9 @@
 }
 
 .note {
-    padding: 2%;
-    min-width: 10%;
-    max-width: 10%;
+    padding: 0.5%;
+    min-width: 8%;
+    max-width: 8%;
     margin: 1% 1.5%;
     max-height: 45px;
     display: inline-block;
@@ -93,11 +93,12 @@
 .note-name,
 .note-date {
     display: block;
+    font-size: 14px;
     text-align: center;
+    padding-bottom: 5px;
 }
 
 .note-name {
-    font-size: 1em;
     overflow-x: auto;
     margin-bottom: 3px;
     text-align: center;
@@ -107,7 +108,6 @@
 
 .note-date {
     color: #fff;
-    font-size: 14px;
     font-family: 'Dosis', sans-serif;
 }
 
