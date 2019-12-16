@@ -698,7 +698,7 @@ def signup():
     
     if request.method == 'GET':
         return render_template('register.html', min_password_length=CredentialConst.MIN_PASSWORD_LENGTH.value, 
-        max_password_length=CredentialConst.MAX_USERNAME_LENGTH.value)   
+        max_password_length=CredentialConst.MAX_PASSWORD_LENGTH.value)   
 
     form = request.form 
 
