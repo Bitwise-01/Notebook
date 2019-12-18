@@ -14,7 +14,7 @@ session['access_level'] != PermissionConst.NONE.value %}
         <button type="button" id="create-topic" onclick="createTopic()">Create</button>
     </div>
 
-    <div id="topics"></div>
+    <div id="table-container"></div>
     <p id="last-active" hidden></p>
     <input type="hidden" id="last-active-timestamp" value="{{ lastActiveTimestamp  }}" />
 </div>

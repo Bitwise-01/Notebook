@@ -41,6 +41,7 @@
 }
 
 #new-topic-name {
+    text-transform: capitalize;
     margin-bottom: 25px;
 }
 

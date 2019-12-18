@@ -25,26 +25,27 @@ function createnote() {
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', CSRFToken);
         }
-    }).done(function(resp) {
+    }).done(resp => {
         let respMsg = resp['resp'];
         let noteId = resp['note_id'];
-        let dateCreated = resp['date_created'];
 
         if (noteId) {
-            let $note = $('<div>', { class: 'note' });
-            $note.attr('onclick', `location.href='/note?topic_id=${topicId}&note_id=${noteId}'`);
+            let timestamp = new Date(resp['date_created'] * 1000);
+            let $note = $('<tr>', {
+                class: 'row',
+                onclick: `location.href='/note?topic_id=${topicId}&note_id=${noteId}'`
+            });
 
-            let $noteTitle = $('<span>', { class: 'note-name' });
-            let $noteDate = $('<span>', { class: 'note-date' });
+            $note.append(
+                $('<td>')
+                    .css({ 'text-transform': 'capitalize' })
+                    .append(noteTitle)
+            );
+            $note.append($('<td>').append(dateFormat(timestamp, 'mmmm dd, yyyy')));
+            $note.append($('<td>').append(dateFormat(timestamp, 'dddd')));
+            $note.append($('<td>').append(dateFormat(timestamp, 'hh:MM:ss TT')));
 
-            dateCreated = dateFormat(new Date(dateCreated * 1000), 'mmm dd, yyyy');
-
-            $noteTitle.append(noteTitle);
-            $noteDate.append(dateCreated);
-
-            $note.append($noteTitle);
-            $note.append($noteDate);
-            $('#notes').prepend($note);
+            $('#notes tr:first').after($note);
         }
 
         if (noteField.classList.contains('error-msg')) {
@@ -75,38 +76,36 @@ function getnotes() {
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', CSRFToken);
         }
-    }).done(function(resp) {
-        let note;
+    }).done(resp => {
         let noteId;
-        let noteTitle;
-        let dateCreated;
-        let notes = resp['notes'];
+        let timestamp;
 
         let $note;
-        let $noteDate;
-        let $noteTitle;
+        let $tr = $('<tr>');
+        let $table = $('<table>', { id: 'notes' });
 
-        for (let n = 0; n < notes.length; n++) {
-            note = notes[n];
+        $tr.append($('<th>').append('Title'));
+        $tr.append($('<th>').append('Date Created'));
+        $tr.append($('<th>').append('Day Created'));
+        $tr.append($('<th>').append('Time Created'));
+        $table.append($tr);
+
+        resp['notes'].forEach(note => {
             noteId = note['note_id'];
-            dateCreated = note['date_created'];
-            noteTitle = decodeEscaped(note['note_title']);
+            timestamp = new Date(note['date_created'] * 1000);
 
-            $note = $('<div>', { class: 'note' });
-            dateCreated = dateFormat(new Date(dateCreated * 1000), 'mmm dd, yyyy');
+            $note = $('<tr>', {
+                class: 'row',
+                onclick: `location.href='/note?topic_id=${topicId}&note_id=${noteId}'`
+            });
+            $note.css({ 'text-transform': 'capitalize' }).append($('<td>').append(note['note_title']));
+            $note.append($('<td>').append(dateFormat(timestamp, 'mmmm dd, yyyy')));
+            $note.append($('<td>').append(dateFormat(timestamp, 'dddd')));
+            $note.append($('<td>').append(dateFormat(timestamp, 'hh:MM:ss TT')));
 
-            $note.attr('title', noteTitle);
-            $note.attr('onclick', `location.href='/note?topic_id=${topicId}&note_id=${noteId}'`);
+            $table.append($note);
+        });
 
-            $noteTitle = $('<span>', { class: 'note-name' });
-            $noteDate = $('<span>', { class: 'note-date' });
-
-            $noteTitle.append(noteTitle);
-            $noteDate.append(dateCreated);
-
-            $note.append($noteTitle);
-            $note.append($noteDate);
-            $('#notes').append($note);
-        }
+        $('#table-container').append($table);
     });
 }

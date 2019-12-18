@@ -30,6 +30,7 @@
     margin-top: -6px;
     font-size: 16px;
     text-align: center;
+    text-transform: capitalize;
     font-family: 'Comfortaa', cursive;
 }
 
@@ -40,7 +41,8 @@
 
 #new-note-name {
     padding: 8px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
 }
 
 #create-note {
@@ -65,50 +67,13 @@
     font-family: 'Comfortaa', cursive;
 }
 
-#notes {
-    display: flex;
-    height: 410px;
-    overflow: auto;
-    flex-wrap: wrap;
-    margin-top: 1.5%;
-    justify-content: center;
+#table-container {
+    height: 458px;
 }
 
-.note {
-    padding: 0.5%;
-    min-width: 8%;
-    max-width: 8%;
-    margin: 1% 1.5%;
-    max-height: 45px;
-    display: inline-block;
-    border-radius: var(--btn-radius);
-    background-color: var(--btn-color);
-}
-
-.note:hover {
+.row:hover {
     cursor: pointer;
-    background-color: var(--btn-hover);
-}
-
-.note-name,
-.note-date {
-    display: block;
-    font-size: 14px;
-    text-align: center;
-    padding-bottom: 5px;
-}
-
-.note-name {
-    overflow-x: auto;
-    margin-bottom: 3px;
-    text-align: center;
-    white-space: nowrap;
-    font-family: 'Comfortaa', cursive;
-}
-
-.note-date {
-    color: #fff;
-    font-family: 'Dosis', sans-serif;
+    text-decoration: underline;
 }
 
 /* Mobile Screen */

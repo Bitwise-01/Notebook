@@ -37,29 +37,24 @@ function createTopic() {
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', CSRFToken);
         }
-    }).done(function(resp) {
+    }).done(resp => {
         let respMsg = resp['resp'];
         let topicId = resp['topic_id'];
-        let dateCreated = resp['date_created'];
-
-        let t = new Date(dateCreated * 1000);
-        dateCreated = dateFormat(t, 'mmm dd, yyyy');
 
         if (topicId) {
-            let $topic = $('<div>', { class: 'topic' });
+            let timestamp = new Date(resp['date_created'] * 1000);
+            let $topic = $('<tr>', { class: 'row', onclick: `location.href='/topic?id=${topicId}'` });
 
-            $topic.attr('title', topicName);
-            $topic.attr('onclick', `location.href='/topic?id=${topicId}'`);
+            $topic.append(
+                $('<td>')
+                    .css({ 'text-transform': 'capitalize' })
+                    .append(topicName)
+            );
+            $topic.append($('<td>').append(dateFormat(timestamp, 'dddd')));
+            $topic.append($('<td>').append(dateFormat(timestamp, 'mmmm dd, yyyy')));
+            $topic.append($('<td>').append(dateFormat(timestamp, 'hh:MM:ss TT')));
 
-            let $topicName = $('<span>', { class: 'topic-name' });
-            let $topicDate = $('<span>', { class: 'topic-date' });
-
-            $topicName.append(topicName);
-            $topicDate.append(dateCreated);
-
-            $topic.append($topicName);
-            $topic.append($topicDate);
-            $('#topics').prepend($topic);
+            $('#topics tr:first').after($topic);
         }
 
         if (topicField.classList.contains('error-msg')) {
@@ -87,38 +82,39 @@ function getTopics() {
         beforeSend: function(request) {
             request.setRequestHeader('X-CSRFToken', CSRFToken);
         }
-    }).done(function(resp) {
-        let topic;
-        let topicId;
-        let topicName;
-        let dateCreated;
-        let topics = resp['topics'];
-
+    }).done(resp => {
         let $topic;
-        let $topicName;
-        let $topicDate;
+        let $tr = $('<tr>');
+        let $table = $('<table>', { id: 'topics' });
 
-        for (let n = 0; n < topics.length; n++) {
-            topic = topics[n];
+        let topicId;
+        let timestamp;
+        let topicTitle;
+
+        $tr.append($('<th>').append('Title'));
+        $tr.append($('<th>').append('Date Created'));
+        $tr.append($('<th>').append('Day Created'));
+        $tr.append($('<th>').append('Time Created'));
+        $table.append($tr);
+
+        resp['topics'].forEach(topic => {
             topicId = topic['topic_id'];
-            dateCreated = topic['date_created'];
-            topicName = decodeEscaped(topic['topic_name']);
+            topicTitle = decodeEscaped(topic['topic_name']);
+            timestamp = new Date(topic['date_created'] * 1000);
 
-            dateCreated = dateFormat(new Date(dateCreated * 1000), 'mmm dd, yyyy');
-            $topic = $('<div>', { class: 'topic' });
+            $topic = $('<tr>', { class: 'row', onclick: `location.href='/topic?id=${topicId}'` });
+            $topic.append(
+                $('<td>')
+                    .css({ 'text-transform': 'capitalize' })
+                    .append(topicTitle)
+            );
+            $topic.append($('<td>').append(dateFormat(timestamp, 'mmmm dd, yyyy')));
+            $topic.append($('<td>').append(dateFormat(timestamp, 'dddd')));
+            $topic.append($('<td>').append(dateFormat(timestamp, 'hh:MM:ss TT')));
 
-            $topic.attr('title', topicName);
-            $topic.attr('onclick', `location.href='/topic?id=${topicId}'`);
+            $table.append($topic);
+        });
 
-            $topicName = $('<span>', { class: 'topic-name' });
-            $topicDate = $('<span>', { class: 'topic-date' });
-
-            $topicName.append(topicName);
-            $topicDate.append(dateCreated);
-
-            $topic.append($topicName);
-            $topic.append($topicDate);
-            $('#topics').append($topic);
-        }
+        $('#table-container').append($table);
     });
 }

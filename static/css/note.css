@@ -26,6 +26,7 @@ body {
 #note-title,
 #name {
     font-size: 16px;
+    text-transform: capitalize;
 }
 
 #topic-name span {

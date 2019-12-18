@@ -12,6 +12,7 @@
 #new-topic-name {
     padding: 8px;
     margin-bottom: 25px;
+    text-transform: capitalize;
 }
 
 #create-topic {
@@ -36,56 +37,15 @@
     font-family: 'Comfortaa', cursive;
 }
 
-#topics {
-    display: flex;
-    height: 480px;
-    margin-top: 1%;
-    overflow: auto;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.topic {
-    padding: 0.5%;
-    min-width: 8%;
-    max-width: 8%;
-    margin: 2% 1.5%;
-    max-height: 45px;
-    display: inline-block;
-    border-radius: var(--btn-radius);
-    background-color: var(--btn-color);
-}
-
-.topic:hover {
-    cursor: pointer;
-    background-color: var(--btn-hover);
-}
-
-.topic-name,
-.topic-date {
-    display: block;
-    font-size: 14px;
-    text-align: center;
-    padding-bottom: 5px;
-}
-
-.topic-name {
-    overflow-x: auto;
-    margin-bottom: 3px;
-    text-align: center;
-    white-space: nowrap;
-    font-family: 'Comfortaa', cursive;
-}
-
-.topic-date {
-    color: #fff;
-    font-family: 'Dosis', sans-serif;
-}
-
 #last-active {
     font-size: 12.5px;
     text-align: center;
     font-family: 'Comfortaa', cursive;
+}
+
+.row:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 /* Medium Screen */
@@ -93,26 +53,9 @@
     #container {
         padding-top: 20%;
     }
-
-    #topics {
-        height: auto;
-        flex-direction: column;
-    }
-
-    .topic {
-        max-width: none;
-    }
-
-    .topic-name {
-        font-size: 1.05em;
-    }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    .topic-name {
-        font-size: 1em;
-    }
-
     #container {
         padding-top: 14%;
     }
