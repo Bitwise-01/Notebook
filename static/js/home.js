@@ -50,8 +50,8 @@ function createTopic() {
                     .css({ 'text-transform': 'capitalize' })
                     .append(topicName)
             );
-            $topic.append($('<td>').append(dateFormat(timestamp, 'dddd')));
             $topic.append($('<td>').append(dateFormat(timestamp, 'mmmm dd, yyyy')));
+            $topic.append($('<td>').append(dateFormat(timestamp, 'dddd')));
             $topic.append($('<td>').append(dateFormat(timestamp, 'hh:MM:ss TT')));
 
             $('#topics tr:first').after($topic);
@@ -108,8 +108,8 @@ function getTopics() {
                     .css({ 'text-transform': 'capitalize' })
                     .append(topicTitle)
             );
-            $topic.append($('<td>').append(dateFormat(timestamp, 'dddd')));
             $topic.append($('<td>').append(dateFormat(timestamp, 'mmmm dd, yyyy')));
+            $topic.append($('<td>').append(dateFormat(timestamp, 'dddd')));
             $topic.append($('<td>').append(dateFormat(timestamp, 'hh:MM:ss TT')));
 
             $table.append($topic);
