@@ -32,7 +32,8 @@ app.permanent_session_lifetime = timedelta(
     minutes=SessionConst.SESSION_TTL.value)
 
 # Protection against CSRF attack
-CSRFProtect(app)
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 
 # databases
 account_db = Account()
