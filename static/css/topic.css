@@ -1,110 +1,110 @@
-@import url('main.css');
+@import url("main.css");
 
 #container {
-    padding-top: 5%;
+	padding-top: 5%;
 }
 
 #settings {
-    font-size: 12px;
-    margin-left: 20px;
-    margin-bottom: 15px;
-    display: inline-block;
-    text-decoration: none;
-    color: var(--btn-color);
-    font-family: 'Comfortaa', cursive;
+	font-size: 12px;
+	margin-left: 20px;
+	margin-bottom: 15px;
+	display: inline-block;
+	text-decoration: none;
+	color: var(--btn-color);
+	font-family: "Comfortaa", cursive;
 }
 
 #settings:hover {
-    cursor: pointer;
-    color: var(--btn-hover);
+	cursor: pointer;
+	color: var(--btn-hover);
 }
 
 #settings img {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-    background-color: #fff;
+	width: 22px;
+	height: 22px;
+	border-radius: 5px;
+	background-color: #fff;
 }
 
 #topic-name {
-    margin-top: -6px;
-    font-size: 16px;
-    text-align: center;
-    text-transform: capitalize;
-    font-family: 'Comfortaa', cursive;
+	margin-top: -6px;
+	font-size: 16px;
+	text-align: center;
+	text-transform: capitalize;
+	font-family: "Comfortaa", cursive;
 }
 
 #create {
-    display: table;
-    margin: 0 auto;
+	display: table;
+	margin: 0 auto;
 }
 
 #new-note-name {
-    padding: 8px;
-    margin-bottom: 20px;
-    text-transform: capitalize;
+	padding: 8px;
+	margin-bottom: 20px;
+	text-transform: capitalize;
 }
 
 #create-note {
-    padding: 12px;
-    display: block;
-    margin: 0 auto;
-    color: var(--txt-color);
-    background-color: var(--btn-color);
+	padding: 12px;
+	display: block;
+	margin: 0 auto;
+	color: var(--txt-color);
+	background-color: var(--btn-color);
 }
 
 #create-note:hover {
-    cursor: pointer;
-    background-color: var(--btn-hover);
+	cursor: pointer;
+	background-color: var(--btn-hover);
 }
 
 #new-note-name,
 #create-note {
-    border: none;
-    outline: none;
-    font-size: 14px;
-    border-radius: var(--btn-radius);
-    font-family: 'Comfortaa', cursive;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	border-radius: var(--btn-radius);
+	font-family: "Comfortaa", cursive;
 }
 
 #table-container {
-    height: 458px;
+	height: 458px;
 }
 
-.row:hover {
-    cursor: pointer;
-    text-decoration: underline;
+.row > td:first-of-type:hover {
+	font-weight: bold;
+	cursor: pointer;
 }
 
 /* Mobile Screen */
 @media (min-width: 300px) and (max-width: 767px) {
-    #container {
-        padding-top: 20%;
-    }
+	#container {
+		padding-top: 20%;
+	}
 
-    #notes {
-        padding: 2%;
-        height: auto;
-        flex-direction: column;
-    }
+	#notes {
+		padding: 2%;
+		height: auto;
+		flex-direction: column;
+	}
 
-    .note {
-        max-width: none;
-    }
+	.note {
+		max-width: none;
+	}
 }
 
 /* Wide Screen */
 @media (min-width: 768px) and (max-width: 1024px) {
-    body,
-    #container {
-        overflow: hidden;
-    }
-    #navbar {
-        opacity: 1;
-        visibility: visible;
-    }
+	body,
+	#container {
+		overflow: hidden;
+	}
+	#navbar {
+		opacity: 1;
+		visibility: visible;
+	}
 
-    #container {
-        padding-top: 10%;
-    }
+	#container {
+		padding-top: 10%;
+	}
 }
