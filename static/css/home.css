@@ -1,62 +1,62 @@
-@import url('main.css');
+@import url("main.css");
 
 #container {
-    padding-top: 5%;
+	padding-top: 5%;
 }
 
 #create {
-    display: table;
-    margin: 0 auto;
+	display: table;
+	margin: 0 auto;
 }
 
 #new-topic-name {
-    padding: 8px;
-    margin-bottom: 25px;
-    text-transform: capitalize;
+	padding: 8px;
+	margin-bottom: 25px;
+	text-transform: capitalize;
 }
 
 #create-topic {
-    padding: 12px;
-    display: block;
-    margin: 0 auto;
-    color: var(--txt-color);
-    background-color: var(--btn-color);
+	padding: 12px;
+	display: block;
+	margin: 0 auto;
+	color: var(--txt-color);
+	background-color: var(--btn-color);
 }
 
 #create-topic:hover {
-    cursor: pointer;
-    background-color: var(--btn-hover);
+	cursor: pointer;
+	background-color: var(--btn-hover);
 }
 
 #new-topic-name,
 #create-topic {
-    border: none;
-    outline: none;
-    font-size: 14px;
-    border-radius: var(--btn-radius);
-    font-family: 'Comfortaa', cursive;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	border-radius: var(--btn-radius);
+	font-family: "Comfortaa", cursive;
 }
 
 #last-active {
-    font-size: 12.5px;
-    text-align: center;
-    font-family: 'Comfortaa', cursive;
+	font-size: 12.5px;
+	text-align: center;
+	font-family: "Comfortaa", cursive;
 }
 
-.row:hover {
-    cursor: pointer;
-    text-decoration: underline;
+.row > td:first-of-type:hover {
+	font-weight: bold;
+	cursor: pointer;
 }
 
 /* Medium Screen */
 @media (max-width: 767px) {
-    #container {
-        padding-top: 20%;
-    }
+	#container {
+		padding-top: 20%;
+	}
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    #container {
-        padding-top: 14%;
-    }
+	#container {
+		padding-top: 14%;
+	}
 }
