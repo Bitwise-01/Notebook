@@ -1,7 +1,6 @@
 # Notebook
 
 An app you can trust your secrets with.<br>
-Try it out: https://securenotebook.pythonanywhere.com/<br>
 This app uses AES-128 GCM to prevent anyone but you from accessing your notes.<br>
 
 [![Version](https://img.shields.io/badge/Version-v0.1.0-blue.svg)]()
@@ -56,13 +55,17 @@ This app uses AES-128 GCM to prevent anyone but you from accessing your notes.<b
 ### Installation
 
 ```shell
-$ > pip install -r requirements.txt
+$> pipenv --python 3.9 
+```
+
+```shell
+$> pipenv install
 ```
 
 ### Start
 
 ```shell
-$ > python notebook.py
+$> python notebook.py
 ```
 
 ### Navigate to the following URL within your browser
