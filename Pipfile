@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 bcrypt = "==3.1.6"
 pycryptodome = "==3.7.3"
-Flask = "==1.0.2"
+Flask = "==2.2.5"
 Flask-WTF = "==0.14.3"
 itsdangerous = "==2.0.1"
 markupsafe = "*"
